@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     float maxHP;
-    private float currentHP;
+    [SerializeField]private float currentHP;
     private EnemyCore enemyCore;
 
     private void Awake()

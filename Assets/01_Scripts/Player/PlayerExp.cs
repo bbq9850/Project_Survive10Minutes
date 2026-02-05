@@ -8,6 +8,8 @@ public class PlayerExp : MonoBehaviour
     public int currentExp;
     public int expToNext = 5;
 
+    [SerializeField] LevelUpEffect levelUpEffect;
+
     public void AddExp(int amount)
     {
         currentExp += amount;
@@ -21,7 +23,10 @@ public class PlayerExp : MonoBehaviour
         currentExp -= expToNext;
         level++;
         expToNext = Mathf.RoundToInt(expToNext * 1.4f);
+        levelUpEffect.Play();
 
         Debug.Log($"LEVEL UP! ¡æ {level}");
     }
+
+
 }
