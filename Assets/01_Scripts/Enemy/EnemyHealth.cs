@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class EnemyHealth : MonoBehaviour
     float maxHP;
     [SerializeField]private float currentHP;
     private EnemyCore enemyCore;
+
 
     private void Awake()
     {
@@ -32,9 +34,13 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
+        KillCountManager.Instance.AddKill();
+
         ExpOrbPool.Instance.Spawn(
             transform.position, enemyCore.data.expValue);
         enemyCore.OnDeadEnemy();
+
+        
     }
 
 }

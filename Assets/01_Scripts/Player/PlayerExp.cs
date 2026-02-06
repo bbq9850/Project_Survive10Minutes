@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerExp : MonoBehaviour
 {
@@ -10,10 +12,17 @@ public class PlayerExp : MonoBehaviour
 
     [SerializeField] LevelUpEffect levelUpEffect;
 
+    public event Action<float, float> OnExpChanged;
+    public event Action<int> OnLevelChanged;
+    
+
     public void AddExp(int amount)
     {
         currentExp += amount;
-        Debug.Log($"EXP : {currentExp} / {expToNext}");
+        //Debug.Log($"EXP : {currentExp} / {expToNext}");
+        OnExpChanged?.Invoke(currentExp, expToNext);
+
+
         if (currentExp >= expToNext)
             LevelUp();
     }
@@ -25,6 +34,7 @@ public class PlayerExp : MonoBehaviour
         expToNext = Mathf.RoundToInt(expToNext * 1.4f);
         levelUpEffect.Play();
 
+        OnLevelChanged?.Invoke(level);
         Debug.Log($"LEVEL UP! ¡æ {level}");
     }
 

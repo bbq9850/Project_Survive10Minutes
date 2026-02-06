@@ -16,6 +16,8 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] float spawnRadiusMin = 8f;
     [SerializeField] float spawnRadiusMax = 12f;
 
+   
+
     float spawnInterval = 1.0f;
     int maxEnemyCount = 90;
 
@@ -81,15 +83,15 @@ public class EnemyManager : MonoBehaviour
         return player.position + offset;
     }
 
-    void OnDrawGizmosSelected()
-    {
-        if (player == null) return;
+    //void OnDrawGizmosSelected()
+    //{
+    //    if (player == null) return;
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(player.position, spawnRadiusMin);
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(player.position, spawnRadiusMin);
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(player.position, spawnRadiusMax);
-    }
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(player.position, spawnRadiusMax);
+    //}
 
 }
