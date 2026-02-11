@@ -16,12 +16,17 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] float spawnRadiusMin = 8f;
     [SerializeField] float spawnRadiusMax = 12f;
 
-   
-
     float spawnInterval = 1.0f;
     int maxEnemyCount = 90;
 
     float timeElapsed;
+
+    [Header("Boss")]
+    [SerializeField] EnemyData bossData;
+    [SerializeField] float bossSpawnTime = 600f;
+    [SerializeField] Transform bossSpawnPoint;
+
+    private bool isBossSpawned;
 
     void Awake()
     {
@@ -36,6 +41,12 @@ public class EnemyManager : MonoBehaviour
     void Update()
     {
         timeElapsed += Time.deltaTime;
+
+        if(!isBossSpawned && timeElapsed >= bossSpawnTime)
+        {
+            SpawnBoss();
+            isBossSpawned = true;
+        }
     }
 
     IEnumerator SpawnRoutine()
@@ -71,7 +82,6 @@ public class EnemyManager : MonoBehaviour
     public void OnEnemyDead(EnemyCore enemy)
     {
         ActiveEnemies.Remove(enemy);
-        // EXP 지급 여기서
     }
 
     Vector3 RandomSpawnPos()
@@ -83,15 +93,26 @@ public class EnemyManager : MonoBehaviour
         return player.position + offset;
     }
 
-    //void OnDrawGizmosSelected()
-    //{
-    //    if (player == null) return;
+    void SpawnBoss()
+    {
+        EnemyCore boss = enemyPool.Get();
 
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(player.position, spawnRadiusMin);
+        Vector3 spawnPos;
+        if(bossSpawnPoint != null)
+        {
+            spawnPos = bossSpawnPoint.position;
+        }
+        else
+        {
+            spawnPos = RandomSpawnPos();
+        }
 
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(player.position, spawnRadiusMax);
-    //}
+        boss.transform.position = spawnPos;
+
+        EnemyData runtimeData = Instantiate(bossData);
+
+        boss.OnActiveEnemy(runtimeData, player);
+        ActiveEnemies.Add(boss);
+    }
 
 }

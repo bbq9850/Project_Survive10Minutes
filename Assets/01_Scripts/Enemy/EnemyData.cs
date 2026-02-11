@@ -11,4 +11,5 @@ public class EnemyData : ScriptableObject
     public int attackDamage;
     public int expValue = 1;
 
+    public bool isBoss;
 }
