@@ -13,7 +13,7 @@ public class ExpBar_LvText : MonoBehaviour
     void Start()
     {
         playerExp.OnExpChanged += UpdateExpBar;
-        playerExp.OnLevelChanged += UpdateLevelText;
+        playerExp.OnLevelUp += UpdateLevelText;
     }
 
     void UpdateExpBar(float cur, float max)

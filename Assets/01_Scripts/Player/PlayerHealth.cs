@@ -5,17 +5,20 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public event Action<float> OnDamaged;
+    public event Action<float, float> OnHpChanged;
     public event Action OnDead;
 
-    [SerializeField] private float maxHP = 100f;
-    public float CurrentHP {  get; private set; }
+    [SerializeField] private float maxHp = 100f;
+    private float currentHp;
+
+    public float CurrentHP => currentHp;
+    public float MaxHp => maxHp;
 
     private bool playerIsDead;
 
     private void Awake()
     {
-        CurrentHP = maxHP;
+        currentHp = maxHp;
     }
 
     public void TakeDamage(float damage)
@@ -26,18 +29,26 @@ public class PlayerHealth : MonoBehaviour
         }
         else
         {
-            CurrentHP -= damage;
-            CurrentHP = Mathf.Max(CurrentHP, 0);
-            Debug.Log($"HP : {CurrentHP} / {maxHP}");
+            currentHp -= damage;
+            currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+            Debug.Log($"HP : {currentHp} / {maxHp}");
 
-            OnDamaged?.Invoke(damage);
+            OnHpChanged?.Invoke(currentHp, maxHp);
         }
 
-        if(CurrentHP <= 0)
+        if(currentHp <= 0)
         {
             Die();
         }
 
+    }
+
+    public void PlayerHeal(float heal)
+    {
+        currentHp += heal;
+        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+
+        OnHpChanged?.Invoke(currentHp, maxHp);
     }
 
     private void Die()

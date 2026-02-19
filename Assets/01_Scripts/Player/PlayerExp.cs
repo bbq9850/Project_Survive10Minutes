@@ -13,7 +13,7 @@ public class PlayerExp : MonoBehaviour
     [SerializeField] LevelUpEffect levelUpEffect;
 
     public event Action<float, float> OnExpChanged;
-    public event Action<int> OnLevelChanged;
+    public event Action<int> OnLevelUp;
     
 
     public void AddExp(int amount)
@@ -34,7 +34,7 @@ public class PlayerExp : MonoBehaviour
         expToNext = Mathf.RoundToInt(expToNext * 1.4f);
         levelUpEffect.Play();
 
-        OnLevelChanged?.Invoke(level);
+        OnLevelUp?.Invoke(level);
         Debug.Log($"LEVEL UP! ¡æ {level}");
     }
 
