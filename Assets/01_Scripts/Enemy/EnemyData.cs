@@ -6,10 +6,11 @@ using UnityEngine;
 public class EnemyData : ScriptableObject
 {
 
+    public EnemyType enemyType;
     public float maxHP;
     public float moveSpeed;
     public int attackDamage;
-    public int expValue = 1;
+    public int expValue;
 
     public bool isBoss;
 }

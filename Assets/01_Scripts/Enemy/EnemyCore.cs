@@ -10,6 +10,7 @@ public class EnemyCore : MonoBehaviour
 
     EnemyHealth enemyHealth;
     EnemyMove enemyMove;
+    EnemyExpDrop enemyExpDrop;
 
     public int EnemyNum {  get; private set; }
     static int nextNum = 0;
@@ -18,6 +19,7 @@ public class EnemyCore : MonoBehaviour
     {
         enemyHealth = GetComponent<EnemyHealth>();
         enemyMove = GetComponent<EnemyMove>();
+        enemyExpDrop = GetComponent<EnemyExpDrop>();
 
         EnemyNum = ++nextNum;
         gameObject.name = $"Enemy_{EnemyNum:D2}";
@@ -37,6 +39,14 @@ public class EnemyCore : MonoBehaviour
 
     public void OnDeadEnemy()
     {
+        KillCountManager.Instance.AddKill();
+        
+        if(data != null)
+        {
+            ExpOrbPool.Instance.Spawn(
+                transform.position, data.expValue);
+        }
+
         EnemyManager.instance.OnEnemyDead(this);
         data = null;
         EnemyPool.Instance.ReturnToPool(this);

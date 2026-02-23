@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class PlayerCore : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public CharacterController Controller {  get; private set; }
+    void Awake()
     {
-        
+        Controller = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame

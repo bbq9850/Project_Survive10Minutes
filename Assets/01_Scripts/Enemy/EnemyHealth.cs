@@ -34,13 +34,8 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
-        KillCountManager.Instance.AddKill();
-
-        ExpOrbPool.Instance.Spawn(
-            transform.position, enemyCore.data.expValue);
         enemyCore.OnDeadEnemy();
 
-        
     }
 
 }

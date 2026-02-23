@@ -11,6 +11,13 @@ public class GameTimer : MonoBehaviour
     private float remainingTime;
     private bool isRunning = true;
 
+    public static GameTimer Instance {get; private set;}
+    public float RunningTime { get; set; }
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         remainingTime = startTime;
@@ -23,6 +30,7 @@ public class GameTimer : MonoBehaviour
         if (remainingTime <= 0f) return;
 
         remainingTime -= Time.deltaTime;
+        RunningTime += Time.deltaTime;
 
         if (remainingTime <= 0f)
         {
@@ -40,6 +48,11 @@ public class GameTimer : MonoBehaviour
         int seconds = Mathf.FloorToInt(remainingTime % 60f);
 
         timeText.text = $"{minutes:00}:{seconds:00}";
+    }
+
+    public float GetMinutes()
+    {
+        return RunningTime / 60f;
     }
 
     void OnTimeOver()

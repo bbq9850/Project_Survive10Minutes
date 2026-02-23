@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,37 +6,78 @@ using UnityEngine.UI;
 
 public class PlayerExp : MonoBehaviour
 {
-    public int level = 1;
-    public int currentExp;
-    public int expToNext = 5;
+    public int Level { get; set; } = 1;
+    public int CurrentExp { get; set; }
+    public int ExpToNext { get; set; }
 
     [SerializeField] LevelUpEffect levelUpEffect;
 
     public event Action<float, float> OnExpChanged;
     public event Action<int> OnLevelUp;
-    
+
+    void Start()
+    {
+        ExpToNext = GetExpToNext(Level);
+        OnExpChanged?.Invoke(CurrentExp, ExpToNext);
+    }
+
+    int GetExpToNext(int level)
+    {
+        return Mathf.RoundToInt(
+            10 + level * 9 + level * level * 0.6f
+        );
+    }
 
     public void AddExp(int amount)
     {
-        currentExp += amount;
-        //Debug.Log($"EXP : {currentExp} / {expToNext}");
-        OnExpChanged?.Invoke(currentExp, expToNext);
+        CurrentExp += amount;
+        while (CurrentExp >= ExpToNext)
+        {
+            CurrentExp -= ExpToNext;
+            LevelUpInternal();
+        }
 
-
-        if (currentExp >= expToNext)
-            LevelUp();
+        OnExpChanged?.Invoke(CurrentExp, ExpToNext);
     }
 
-    void LevelUp()
+    void LevelUpInternal()
     {
-        currentExp -= expToNext;
-        level++;
-        expToNext = Mathf.RoundToInt(expToNext * 1.4f);
-        levelUpEffect.Play();
+        Level++;
 
-        OnLevelUp?.Invoke(level);
-        Debug.Log($"LEVEL UP! ¡æ {level}");
+        levelUpEffect?.Play();
+
+        ExpToNext = GetExpToNext(Level);
+
+        OnLevelUp?.Invoke(Level);
+
+        Debug.Log($"LEVEL UP! â†’ {Level}");
     }
+
+    //public void AddExp(int amount)
+    //{
+    //    CurrentExp += amount;
+    //    //Debug.Log($"EXP : {currentExp} / {expToNext}");
+
+
+
+    //    if (CurrentExp >= ExpToNext)
+    //    {
+    //        CurrentExp -= ExpToNext;
+    //        LevelUp();
+    //    }
+    //    OnExpChanged?.Invoke(CurrentExp, ExpToNext);
+    //}
+
+    //void LevelUp()
+    //{
+
+    //    Level++;
+    //    ExpToNext = Mathf.RoundToInt(ExpToNext * 1.4f);
+    //    levelUpEffect.Play();
+
+    //    OnLevelUp?.Invoke(Level);
+    //    Debug.Log($"LEVEL UP! â†’ {Level}");
+    //}
 
 
 }

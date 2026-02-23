@@ -21,6 +21,13 @@ public class EnemyManager : MonoBehaviour
 
     float timeElapsed;
 
+    [Header("Elite")]
+    [SerializeField] EnemyData[] eliteDatas;
+
+    bool elite3Spawned;
+    bool elite6Spawned;
+    bool elite9Spawned;
+
     [Header("Boss")]
     [SerializeField] EnemyData bossData;
     [SerializeField] float bossSpawnTime = 600f;
@@ -62,6 +69,34 @@ public class EnemyManager : MonoBehaviour
         }
     }
 
+    IEnumerator EliteSpawnRoutine()
+    {
+        while (true)
+        {
+            float minute = GameTimer.Instance.GetMinutes();
+
+            if (!elite3Spawned && minute >= 3f)
+            {
+                SpawnElite(0);
+                elite3Spawned = true;
+            }
+
+            if (!elite6Spawned && minute >= 6f)
+            {
+                SpawnElite(1);
+                elite6Spawned = true;
+            }
+
+            if (!elite9Spawned && minute >= 9f)
+            {
+                SpawnElite(2);
+                elite9Spawned = true;
+            }
+
+            yield return null;
+        }
+    }
+
     void SpawnEnemy()
     {
         EnemyCore enemy = enemyPool.Get();
@@ -77,6 +112,21 @@ public class EnemyManager : MonoBehaviour
 
         enemy.OnActiveEnemy(runtimeData, player);
         ActiveEnemies.Add(enemy);
+    }
+
+    void SpawnElite(int index)
+    {
+        if (eliteDatas.Length <= index) return;
+
+        EnemyData data = eliteDatas[index];
+
+        Vector3 spawnPos = RandomSpawnPos();
+
+        EnemyCore enemy = EnemyPool.Instance.Get();
+        enemy.transform.position = spawnPos;
+        enemy.OnActiveEnemy(data, player);
+
+        Debug.Log($"Elite Spawned");
     }
 
     public void OnEnemyDead(EnemyCore enemy)
@@ -113,6 +163,7 @@ public class EnemyManager : MonoBehaviour
 
         boss.OnActiveEnemy(runtimeData, player);
         ActiveEnemies.Add(boss);
+        boss.name = "Boss";
     }
 
 }
