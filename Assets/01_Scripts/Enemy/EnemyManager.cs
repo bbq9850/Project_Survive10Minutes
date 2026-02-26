@@ -7,11 +7,13 @@ public class EnemyManager : MonoBehaviour
     
     public static EnemyManager instance;
 
-    public List<EnemyCore> ActiveEnemies = new List<EnemyCore>();
+    public List<EnemyCore> ActiveEnemies { get; private set; } 
+        = new List<EnemyCore>();
 
     [SerializeField] EnemyPool enemyPool;
     [SerializeField] Transform player;
-    [SerializeField] EnemyData enemyBaseData;
+    //[SerializeField] EnemyData enemyBaseData;
+    [SerializeField] List<EnemyData> enemyDatas;
 
     [SerializeField] float spawnRadiusMin = 8f;
     [SerializeField] float spawnRadiusMax = 12f;
@@ -43,6 +45,7 @@ public class EnemyManager : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnRoutine());
+        StartCoroutine(EliteSpawnRoutine());
     }
 
     void Update()
@@ -58,14 +61,20 @@ public class EnemyManager : MonoBehaviour
 
     IEnumerator SpawnRoutine()
     {
-        WaitForSeconds wait = new WaitForSeconds(spawnInterval);
+        //WaitForSeconds wait = new WaitForSeconds(spawnInterval);
 
         while (true)
         {
+            float spawnMul =
+            EnemyDifficultySystem.Instance.GetSpawnMultiplier();
+
+            float dynamicInterval =
+            spawnInterval / spawnMul;
+
             if (ActiveEnemies.Count < maxEnemyCount)
                 SpawnEnemy();
 
-            yield return wait;
+            yield return new WaitForSeconds(dynamicInterval);
         }
     }
 
@@ -99,16 +108,46 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        EnemyCore enemy = enemyPool.Get();
+        //EnemyCore enemy = EnemyPool.Instance.Get(enemyBaseData.enemyPrefab);
+
+        //Vector3 spawnPos = RandomSpawnPos();
+        //enemy.transform.position = spawnPos;
+
+        //float minute = EnemyDifficultySystem.Instance.GetMinute();
+
+        //float hpMul =
+        //EnemyDifficultySystem.Instance.GetHpMultiplier();
+        //float dmgMul =
+        //EnemyDifficultySystem.Instance.GetDamageMultiplier();
+
+        //EnemyData runtimeData = Instantiate(enemyBaseData);
+        //runtimeData.maxHP += hpMul;
+        //runtimeData.attackDamage += Mathf.RoundToInt(dmgMul);
+
+        //enemy.OnActiveEnemy(runtimeData, player);
+        //ActiveEnemies.Add(enemy);
+
+        if (enemyDatas == null || enemyDatas.Count == 0)
+            return;
+
+        EnemyData baseData =
+            enemyDatas[Random.Range(0, enemyDatas.Count)];
+
+        EnemyCore enemy =
+            EnemyPool.Instance.Get(baseData.enemyPrefab);
 
         Vector3 spawnPos = RandomSpawnPos();
         enemy.transform.position = spawnPos;
 
-        float minute = timeElapsed / 60f;
-        float hpMultiplier = Mathf.Pow(1.18f, minute);
+        float hpMul =
+            EnemyDifficultySystem.Instance.GetHpMultiplier();
 
-        EnemyData runtimeData = Instantiate(enemyBaseData);
-        runtimeData.maxHP *= hpMultiplier;
+        float dmgMul =
+            EnemyDifficultySystem.Instance.GetDamageMultiplier();
+
+        EnemyData runtimeData = Instantiate(baseData);
+        runtimeData.maxHP += hpMul;
+        runtimeData.attackDamage += Mathf.RoundToInt(dmgMul);
 
         enemy.OnActiveEnemy(runtimeData, player);
         ActiveEnemies.Add(enemy);
@@ -122,8 +161,7 @@ public class EnemyManager : MonoBehaviour
 
         Vector3 spawnPos = RandomSpawnPos();
 
-        EnemyCore enemy = EnemyPool.Instance.Get();
-        enemy.transform.position = spawnPos;
+        EnemyCore enemy = EnemyPool.Instance.Get(data.enemyPrefab);
         enemy.OnActiveEnemy(data, player);
 
         Debug.Log($"Elite Spawned");
@@ -136,7 +174,7 @@ public class EnemyManager : MonoBehaviour
 
     Vector3 RandomSpawnPos()
     {
-        Vector2 randomDir = Random.insideUnitCircle.normalized;
+        Vector2 randomDir = Random.insideUnitCircle;
         float dis = Random.Range(spawnRadiusMin, spawnRadiusMax);
 
         Vector3 offset = new Vector3(randomDir.x, 0, randomDir.y) * dis;
@@ -145,7 +183,7 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnBoss()
     {
-        EnemyCore boss = enemyPool.Get();
+        EnemyCore boss = EnemyPool.Instance.Get(bossData.enemyPrefab);
 
         Vector3 spawnPos;
         if(bossSpawnPoint != null)

@@ -12,5 +12,7 @@ public class EnemyData : ScriptableObject
     public int attackDamage;
     public int expValue;
 
+    public EnemyCore enemyPrefab;
+
     public bool isBoss;
 }

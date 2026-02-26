@@ -12,6 +12,16 @@ public class EnemyCore : MonoBehaviour
     EnemyMove enemyMove;
     EnemyExpDrop enemyExpDrop;
 
+    //[SerializeField] Transform visualRoot;
+
+    //GameObject currentVisual;
+
+    public EnemyCore OriginalPrefab { get; private set; }
+    public void SetOriginalPrefab(EnemyCore prefab)
+    {
+        OriginalPrefab = prefab;
+    }
+
     public int EnemyNum {  get; private set; }
     static int nextNum = 0;
 
@@ -33,8 +43,15 @@ public class EnemyCore : MonoBehaviour
         enemyHealth.Init(data.maxHP);
         enemyMove.Init(data.moveSpeed, target);
 
+        //if (currentVisual == null && data.visualPrefab != null)
+        //{
+        //    currentVisual = 
+        //        Instantiate(data.visualPrefab, target);
+        //    currentVisual.transform.localPosition = Vector3.zero;
+        //    currentVisual.transform.localRotation = Quaternion.identity;
+        //}
+
         gameObject.SetActive(true);
-        
     }
 
     public void OnDeadEnemy()
@@ -51,6 +68,8 @@ public class EnemyCore : MonoBehaviour
         data = null;
         EnemyPool.Instance.ReturnToPool(this);
     }
+    
+
 
     public void TakeDamage(float damage)
     {

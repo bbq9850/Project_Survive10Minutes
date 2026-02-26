@@ -6,43 +6,52 @@ public class EnemyPool : MonoBehaviour
 {
     public static EnemyPool Instance;
 
-    [SerializeField] EnemyCore enemyPrefab;
+    
     [SerializeField] int initialSize = 30;
 
     [SerializeField] Transform activeParent;
     [SerializeField] Transform pooledParent;
 
-    Queue<EnemyCore> pool = new Queue<EnemyCore>();
+    Dictionary<EnemyCore, Queue<EnemyCore>> pools
+        = new Dictionary<EnemyCore, Queue<EnemyCore>>();
 
     void Awake()
     {
         Instance = this;
-        InitializePool();
+        
     }
 
-    void InitializePool()
+    
+    EnemyCore CreateNewEnemy(EnemyCore prefab)
     {
-        for (int i = 0; i < initialSize; i++)
-        {
-            CreateNewEnemy();
-        }
-    }
-
-    EnemyCore CreateNewEnemy()
-    {
-        EnemyCore enemy = Instantiate(enemyPrefab, pooledParent);
+        EnemyCore enemy = Instantiate(prefab, pooledParent);
+        enemy.SetOriginalPrefab(prefab); 
         enemy.gameObject.SetActive(false);
-        pool.Enqueue(enemy);
         return enemy;
     }
-
-    public EnemyCore Get()
+    public EnemyCore Get(EnemyCore prefab)
     {
+        if (!pools.ContainsKey(prefab))
+        {
+            pools[prefab] = new Queue<EnemyCore>();
+
+            // 초기 생성
+            for (int i = 0; i < initialSize; i++)
+            {
+                pools[prefab].Enqueue(CreateNewEnemy(prefab));
+            }
+        }
+
+        var pool = pools[prefab];
+
         if (pool.Count == 0)
-            CreateNewEnemy();
+            pool.Enqueue(CreateNewEnemy(prefab));
 
         EnemyCore enemy = pool.Dequeue();
+
         enemy.transform.SetParent(activeParent);
+        enemy.gameObject.SetActive(true);
+
         return enemy;
     }
 
@@ -50,6 +59,8 @@ public class EnemyPool : MonoBehaviour
     {
         enemy.gameObject.SetActive(false);
         enemy.transform.SetParent(pooledParent);
-        pool.Enqueue(enemy);
+
+        EnemyCore prefabKey = enemy.OriginalPrefab;
+        pools[prefabKey].Enqueue(enemy);
     }
 }
