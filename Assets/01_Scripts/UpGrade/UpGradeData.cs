@@ -15,7 +15,8 @@ public class UpGradeData : ScriptableObject
 
 public enum UpGradeType
 {
-    Attack,
+    AttackPower,
+    AttackSpeed,
     MoveSpeed,
     MaxHp
 }

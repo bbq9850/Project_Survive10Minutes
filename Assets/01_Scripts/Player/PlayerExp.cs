@@ -24,7 +24,7 @@ public class PlayerExp : MonoBehaviour
     int GetExpToNext(int level)
     {
         return Mathf.RoundToInt(
-            10 + level * 9 + level * level * 0.6f
+            5 + level * 9 + level * level * 0.6f
         );
     }
 
@@ -49,6 +49,8 @@ public class PlayerExp : MonoBehaviour
         ExpToNext = GetExpToNext(Level);
 
         OnLevelUp?.Invoke(Level);
+
+        LevelUpManager.Instance.OpenLevelUp();
 
         Debug.Log($"LEVEL UP! → {Level}");
     }

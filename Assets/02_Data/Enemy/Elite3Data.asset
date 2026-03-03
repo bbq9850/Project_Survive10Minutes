@@ -17,4 +17,6 @@ MonoBehaviour:
   moveSpeed: 3
   attackDamage: 20
   expValue: 25
+  healDropChance: 1
+  enemyPrefab: {fileID: 0}
   isBoss: 0

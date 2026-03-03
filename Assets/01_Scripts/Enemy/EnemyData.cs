@@ -12,6 +12,9 @@ public class EnemyData : ScriptableObject
     public int attackDamage;
     public int expValue;
 
+    [Range(0f, 1f)]
+    public float healDropChance;
+
     public EnemyCore enemyPrefab;
 
     public bool isBoss;

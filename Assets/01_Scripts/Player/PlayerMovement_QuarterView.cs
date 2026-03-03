@@ -6,11 +6,13 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement_QuarterView : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
+
     [SerializeField] Transform mainCam;
 
     PlayerInput playerInput;
     PlayerCore playerCore;
+    PlayerStat stat;
+    PlayerDash dash;
 
     Vector3 camForward;
     Vector3 camRight;
@@ -21,6 +23,8 @@ public class PlayerMovement_QuarterView : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         playerCore = GetComponent<PlayerCore>();
+        stat = GetComponent<PlayerStat>();
+        dash = GetComponent<PlayerDash>();
 
         if (mainCam == null)
             mainCam = Camera.main.transform;
@@ -46,6 +50,10 @@ public class PlayerMovement_QuarterView : MonoBehaviour
 
     void Move()
     {
+        if (dash != null && dash.IsDashing)
+        {
+            return;
+        }
         Vector3 inputDir = playerInput.PlayerMoveInput;
 
         if (inputDir.sqrMagnitude < 0.001f)
@@ -60,7 +68,7 @@ public class PlayerMovement_QuarterView : MonoBehaviour
                 MoveDir.Normalize();
         }
 
-        Vector3 velocity = MoveDir * moveSpeed;
+        Vector3 velocity = MoveDir * stat.moveSpeed;
 
         playerCore.Controller.Move(
             velocity * Time.deltaTime

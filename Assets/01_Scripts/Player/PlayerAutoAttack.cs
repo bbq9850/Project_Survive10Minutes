@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class PlayerAutoAttack : MonoBehaviour
 {
-
+    PlayerStat stat;
     [SerializeField] float attackRange = 5f;
-    [SerializeField] float attackInterval = 0.5f;
-    [SerializeField] float damage = 10f;
+    
 
     [SerializeField] HitEffect hitEffectPrefab;
 
     float attackCoolTime;
 
-    void Start()
+    void Awake()
     {
-        
+        stat = GetComponent<PlayerStat>();
+       
     }
 
     
@@ -23,7 +23,9 @@ public class PlayerAutoAttack : MonoBehaviour
     {
         attackCoolTime += Time.deltaTime;
 
-        if (attackCoolTime >= attackInterval)
+        float interval = 1f / stat.attackSpeed;
+
+        if (attackCoolTime >= interval)
         {
             attackCoolTime = 0f;
             AutoAttack();
@@ -35,7 +37,7 @@ public class PlayerAutoAttack : MonoBehaviour
         EnemyCore target = FindClosestEnemy();
         if (target == null) return;
 
-        target.TakeDamage(damage);
+        target.TakeDamage(stat.attackPower);
         HitEffectPool.Instance.Play(target.transform.position);
     }
 

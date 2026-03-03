@@ -5,25 +5,38 @@ using UnityEngine.UI;
 
 public class LevelUpUI : MonoBehaviour
 {
-    [SerializeField] GameObject upGradePanel;
-    [SerializeField] Text UpGradeText;
+    [SerializeField] LevelUpButton buttonPrefab;
+    [SerializeField] Transform buttonParent;
+
+    List<LevelUpButton> buttons = new();
 
 
     void Start()
     {
-        upGradePanel.SetActive(false);
+        
     }
 
-    public void Open(int level)
+    public void Open(List<UpGradeData> options)
     {
         Time.timeScale = 0f;
-        upGradePanel.SetActive(true);
-        UpGradeText.text = $"레벨 업!! 현재 레벨:{level}";
+        gameObject.SetActive(true);
+
+        foreach (var btn in buttons)
+            Destroy(btn.gameObject);
+
+        buttons.Clear();
+
+        foreach (var option in options)
+        {
+            var btn = Instantiate(buttonPrefab, buttonParent);
+            btn.Setup(option);
+            buttons.Add(btn);
+        }
     }
 
     public void Close()
     {
-        upGradePanel.SetActive(false);
+        gameObject.SetActive(false);
         Time.timeScale = 1f;
     }
 }

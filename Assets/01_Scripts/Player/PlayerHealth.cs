@@ -7,18 +7,19 @@ public class PlayerHealth : MonoBehaviour
 {
     public event Action<float, float> OnHpChanged;
     public event Action OnDead;
-
-    [SerializeField] private float maxHp = 100f;
+    PlayerStat stat;
+    
     private float currentHp;
 
     public float CurrentHP => currentHp;
-    public float MaxHp => maxHp;
+    
 
     private bool playerIsDead;
 
     private void Awake()
     {
-        currentHp = maxHp;
+        stat = GetComponent<PlayerStat>();
+        currentHp = stat.maxHP;
     }
 
     public void TakeDamage(float damage)
@@ -30,10 +31,10 @@ public class PlayerHealth : MonoBehaviour
         else
         {
             currentHp -= damage;
-            currentHp = Mathf.Clamp(currentHp, 0, maxHp);
-            Debug.Log($"HP : {currentHp} / {maxHp}");
+            currentHp = Mathf.Clamp(currentHp, 0, stat.maxHP);
+            Debug.Log($"HP : {currentHp} / {stat.maxHP}");
 
-            OnHpChanged?.Invoke(currentHp, maxHp);
+            OnHpChanged?.Invoke(currentHp, stat.maxHP);
         }
 
         if(currentHp <= 0)
@@ -46,9 +47,9 @@ public class PlayerHealth : MonoBehaviour
     public void PlayerHeal(float heal)
     {
         currentHp += heal;
-        currentHp = Mathf.Clamp(currentHp, 0, maxHp);
+        currentHp = Mathf.Clamp(currentHp, 0, stat.maxHP);
 
-        OnHpChanged?.Invoke(currentHp, maxHp);
+        OnHpChanged?.Invoke(currentHp, stat.maxHP);
     }
 
     private void Die()

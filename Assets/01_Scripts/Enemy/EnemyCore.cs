@@ -62,14 +62,24 @@ public class EnemyCore : MonoBehaviour
         {
             ExpOrbPool.Instance.Spawn(
                 transform.position, data.expValue);
+
+            TryDropHeal();
         }
 
         EnemyManager.instance.OnEnemyDead(this);
         data = null;
         EnemyPool.Instance.ReturnToPool(this);
     }
-    
 
+    void TryDropHeal()
+    {
+        if (data == null) { return; }
+
+        if (Random.value <= data.healDropChance)
+        {
+            HealPickupPool.Instance.Spawn(transform.position);
+        }
+    }
 
     public void TakeDamage(float damage)
     {
