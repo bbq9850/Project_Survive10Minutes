@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField]private float currentHP;
     private EnemyCore enemyCore;
 
+    bool isDead;
 
     private void Awake()
     {
@@ -19,13 +20,17 @@ public class EnemyHealth : MonoBehaviour
     {
         this.maxHP = maxHP;
         currentHP = maxHP;
+        isDead = false;
     }
 
     public void TakeDamage(float damage)
     {
+        if (isDead)
+        {
+            return;
+        }
         currentHP -= damage;
-        //Debug.Log($"{gameObject.name} currentHP : {currentHP}");
-        
+
         if(currentHP <= 0)
         {
             Die();
@@ -34,6 +39,13 @@ public class EnemyHealth : MonoBehaviour
 
     void Die()
     {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+
         enemyCore.OnDeadEnemy();
 
     }

@@ -12,9 +12,7 @@ public class EnemyCore : MonoBehaviour
     EnemyMove enemyMove;
     EnemyExpDrop enemyExpDrop;
 
-    //[SerializeField] Transform visualRoot;
-
-    //GameObject currentVisual;
+    bool isDead;
 
     public EnemyCore OriginalPrefab { get; private set; }
     public void SetOriginalPrefab(EnemyCore prefab)
@@ -43,19 +41,18 @@ public class EnemyCore : MonoBehaviour
         enemyHealth.Init(data.maxHP);
         enemyMove.Init(data.moveSpeed, target);
 
-        //if (currentVisual == null && data.visualPrefab != null)
-        //{
-        //    currentVisual = 
-        //        Instantiate(data.visualPrefab, target);
-        //    currentVisual.transform.localPosition = Vector3.zero;
-        //    currentVisual.transform.localRotation = Quaternion.identity;
-        //}
-
+        isDead = false;
         gameObject.SetActive(true);
     }
 
     public void OnDeadEnemy()
     {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
         KillCountManager.Instance.AddKill();
         
         if(data != null)

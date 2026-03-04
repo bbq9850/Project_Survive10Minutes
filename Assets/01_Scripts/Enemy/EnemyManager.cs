@@ -15,8 +15,8 @@ public class EnemyManager : MonoBehaviour
     //[SerializeField] EnemyData enemyBaseData;
     [SerializeField] List<EnemyData> enemyDatas;
 
-    [SerializeField] float spawnRadiusMin = 8f;
-    [SerializeField] float spawnRadiusMax = 12f;
+    [SerializeField] float spawnRadiusMin = 20f;
+    [SerializeField] float spawnRadiusMax = 28f;
 
     float spawnInterval = 1.0f;
     int maxEnemyCount = 90;

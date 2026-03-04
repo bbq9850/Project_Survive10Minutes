@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerExp : MonoBehaviour
 {
+    public static PlayerExp Instance;
     public int Level { get; set; } = 1;
     public int CurrentExp { get; set; }
     public int ExpToNext { get; set; }
@@ -14,7 +15,16 @@ public class PlayerExp : MonoBehaviour
 
     public event Action<float, float> OnExpChanged;
     public event Action<int> OnLevelUp;
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
+        Instance = this;
+    }
     void Start()
     {
         ExpToNext = GetExpToNext(Level);

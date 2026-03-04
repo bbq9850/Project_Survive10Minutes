@@ -18,5 +18,5 @@ MonoBehaviour:
   attackDamage: 20
   expValue: 100
   healDropChance: 1
-  enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 2636994325713589944, guid: 4f42c2728cdd7254993e4189074d05c9, type: 3}
   isBoss: 0

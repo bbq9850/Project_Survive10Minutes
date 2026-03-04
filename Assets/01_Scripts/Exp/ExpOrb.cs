@@ -5,46 +5,69 @@ using UnityEngine;
 public class ExpOrb : MonoBehaviour
 {
     int expAmount;
-    Transform player;
     ExpOrbPool pool;
 
-    [SerializeField] float moveSpeed = 6f;
-    [SerializeField] float attractDistance = 2.5f;
+    [SerializeField] float moveSpeed = 10f;
+    [SerializeField] float attractDistance = 2f;
+    [SerializeField] float collectDistance = 0.5f;
 
-    public void Init(ExpOrbPool pool, Transform player)
+    bool isActive;
+
+    public void Init(ExpOrbPool pool)
     {
         this.pool = pool;
-        this.player = player;
     }
 
+    
+
+    void Update()
+    {
+        if (!isActive)
+            return;
+
+        Transform player = PlayerCore.Instance.transform;
+
+        if (player == null)
+            return;
+
+        Vector3 dir = player.position - transform.position;
+        float dist = dir.magnitude;
+
+        if (dist <= collectDistance)
+        {
+            Collect();
+            return;
+        }
+
+        if (dist <= attractDistance)
+        {
+            float step = moveSpeed * Time.deltaTime;
+            transform.position += dir.normalized * step;
+        }
+    }
+
+    void Collect()
+    {
+        if (!isActive) return;
+
+        isActive = false;
+
+        PlayerExp.Instance.AddExp(expAmount);
+
+        pool.Return(this);
+    }
     public void Activate(Vector3 position, int amount)
     {
         transform.position = position;
         expAmount = amount;
+
+        isActive = true;
         gameObject.SetActive(true);
+        
     }
-
-    void Update()
+    public void Deactivate()
     {
-        if (player == null) return;
-
-        float dist = Vector3.Distance(transform.position, player.position);
-
-        if (dist <= attractDistance)
-        {
-            transform.position = Vector3.MoveTowards(
-                transform.position,
-                player.position,
-                moveSpeed * Time.deltaTime
-            );
-        }
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (!other.CompareTag("Player")) return;
-
-        other.GetComponent<PlayerExp>().AddExp(expAmount);
-        pool.Return(this);
+        isActive = false;
+        gameObject.SetActive(false);
     }
 }
