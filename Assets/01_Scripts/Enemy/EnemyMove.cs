@@ -7,6 +7,9 @@ public class EnemyMove : MonoBehaviour
     private Transform target;
     private float moveSpeed;
 
+    [SerializeField] float separationRadius = 0.7f;
+    [SerializeField] float separationForce = 2f;
+
     public void Init(float speed, Transform target)
     {
         this.moveSpeed = speed;
@@ -23,7 +26,29 @@ public class EnemyMove : MonoBehaviour
         Vector3 dir = target.position - transform.position;
         dir.y = 0;
 
-        transform.position += dir.normalized * moveSpeed * Time.deltaTime;
-        transform.forward = dir;
+        Vector3 moveDir = dir.normalized;
+
+        Collider[] hits = Physics
+            .OverlapSphere(transform.position, separationRadius);
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.gameObject == gameObject) continue;
+
+            if (hit.TryGetComponent(out EnemyCore enemy))
+            {
+                Vector3 away = transform.position - enemy.transform.position;
+                away.y = 0;
+
+                moveDir += away.normalized * separationForce;
+            }
+        }
+
+        moveDir.Normalize();
+
+        transform.position += moveDir * moveSpeed * Time.deltaTime;
+
+        if (moveDir != Vector3.zero)
+            transform.forward = moveDir;
     }
 }

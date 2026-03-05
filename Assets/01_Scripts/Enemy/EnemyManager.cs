@@ -33,7 +33,6 @@ public class EnemyManager : MonoBehaviour
     [Header("Boss")]
     [SerializeField] EnemyData bossData;
     [SerializeField] float bossSpawnTime = 600f;
-    [SerializeField] Transform bossSpawnPoint;
 
     private bool isBossSpawned;
 
@@ -108,24 +107,6 @@ public class EnemyManager : MonoBehaviour
 
     void SpawnEnemy()
     {
-        //EnemyCore enemy = EnemyPool.Instance.Get(enemyBaseData.enemyPrefab);
-
-        //Vector3 spawnPos = RandomSpawnPos();
-        //enemy.transform.position = spawnPos;
-
-        //float minute = EnemyDifficultySystem.Instance.GetMinute();
-
-        //float hpMul =
-        //EnemyDifficultySystem.Instance.GetHpMultiplier();
-        //float dmgMul =
-        //EnemyDifficultySystem.Instance.GetDamageMultiplier();
-
-        //EnemyData runtimeData = Instantiate(enemyBaseData);
-        //runtimeData.maxHP += hpMul;
-        //runtimeData.attackDamage += Mathf.RoundToInt(dmgMul);
-
-        //enemy.OnActiveEnemy(runtimeData, player);
-        //ActiveEnemies.Add(enemy);
 
         if (enemyDatas == null || enemyDatas.Count == 0)
             return;
@@ -159,10 +140,13 @@ public class EnemyManager : MonoBehaviour
 
         EnemyData data = eliteDatas[index];
 
-        Vector3 spawnPos = RandomSpawnPos();
-
         EnemyCore enemy = EnemyPool.Instance.Get(data.enemyPrefab);
+
+        Vector3 spawnPos = RandomSpawnPos();
+        enemy.transform.position = spawnPos;
+
         enemy.OnActiveEnemy(data, player);
+        ActiveEnemies.Add(enemy);
 
         Debug.Log($"Elite Spawned");
     }
@@ -185,16 +169,7 @@ public class EnemyManager : MonoBehaviour
     {
         EnemyCore boss = EnemyPool.Instance.Get(bossData.enemyPrefab);
 
-        Vector3 spawnPos;
-        if(bossSpawnPoint != null)
-        {
-            spawnPos = bossSpawnPoint.position;
-        }
-        else
-        {
-            spawnPos = RandomSpawnPos();
-        }
-
+        Vector3 spawnPos = RandomSpawnPos();
         boss.transform.position = spawnPos;
 
         EnemyData runtimeData = Instantiate(bossData);

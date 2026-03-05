@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHp -= damage;
             currentHp = Mathf.Clamp(currentHp, 0, stat.maxHP);
-            Debug.Log($"HP : {currentHp} / {stat.maxHP}");
+            // Debug.Log($"HP : {currentHp} / {stat.maxHP}");
 
             OnHpChanged?.Invoke(currentHp, stat.maxHP);
         }

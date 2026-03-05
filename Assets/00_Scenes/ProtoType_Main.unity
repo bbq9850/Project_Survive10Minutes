@@ -6692,16 +6692,16 @@ MonoBehaviour:
   enemyPool: {fileID: 2023646171}
   player: {fileID: 903500764}
   enemyDatas:
-  - {fileID: 11400000, guid: d70ae33a19482ce438d23194c3d81d4b, type: 2}
+  - {fileID: 11400000, guid: 9c4cb9d0034498b4cb7a1c32a3b3439c, type: 2}
+  - {fileID: 11400000, guid: 5a16fdcd310334f4386c03079d039d55, type: 2}
   spawnRadiusMin: 20
   spawnRadiusMax: 28
   eliteDatas:
-  - {fileID: 11400000, guid: bc530d32529804644916c8a09927fa76, type: 2}
-  - {fileID: 11400000, guid: acf896a2633462e41a6cc1f4fd54ed71, type: 2}
-  - {fileID: 11400000, guid: 6780145756db6ee43ae84079bc19a595, type: 2}
+  - {fileID: 11400000, guid: 2d62af9587f7dc14baace05c4f205864, type: 2}
+  - {fileID: 11400000, guid: 2d62af9587f7dc14baace05c4f205864, type: 2}
+  - {fileID: 11400000, guid: 2d62af9587f7dc14baace05c4f205864, type: 2}
   bossData: {fileID: 11400000, guid: 5e33c23886a45a04aba927ee2e307bbd, type: 2}
   bossSpawnTime: 600
-  bossSpawnPoint: {fileID: 0}
 --- !u!114 &2023646171
 MonoBehaviour:
   m_ObjectHideFlags: 0
