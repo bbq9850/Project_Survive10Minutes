@@ -11,6 +11,8 @@ public class ExpOrbPool : MonoBehaviour
     [SerializeField] int maxSize = 300;
     [SerializeField] Transform player;
 
+    [SerializeField] Transform expParent;
+
     Queue<ExpOrb> pool = new Queue<ExpOrb>();
     HashSet<ExpOrb> allOrbs = new HashSet<ExpOrb>();
     HashSet<ExpOrb> inactiveSet = new HashSet<ExpOrb>();
@@ -35,6 +37,7 @@ public class ExpOrbPool : MonoBehaviour
         ExpOrb orb = Instantiate(expPrefab);
         orb.Init(this);
         orb.gameObject.SetActive(false);
+        orb.transform.SetParent(expParent);
 
         pool.Enqueue(orb);
         allOrbs.Add(orb);
@@ -59,6 +62,8 @@ public class ExpOrbPool : MonoBehaviour
 
         if (orb == null)
             return;
+
+        position.y = 0.5f;
 
         orb.Activate(position, amount);
     }

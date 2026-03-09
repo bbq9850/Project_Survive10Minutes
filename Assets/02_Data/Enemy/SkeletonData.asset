@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: SkeletonData
   m_EditorClassIdentifier: 
   enemyType: 0
-  maxHP: 10
+  maxHP: 150
   moveSpeed: 3
   attackDamage: 10
-  expValue: 1
+  expValue: 20
   healDropChance: 0.05
   enemyPrefab: {fileID: 5372907724527394105, guid: 7c39b09e864ee2c4e9ead71a41ec2884, type: 3}
   isBoss: 0

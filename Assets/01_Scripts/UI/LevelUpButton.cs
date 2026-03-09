@@ -6,10 +6,17 @@ using UnityEngine.UI;
 
 public class LevelUpButton : MonoBehaviour
 {
-    [SerializeField] Text titleText;
+    
     [SerializeField] Text valueText;
     [SerializeField] Image icon;
     [SerializeField] Button button;
+
+    [SerializeField] Image cardBackground;
+
+    [SerializeField] Sprite attackPowerBG;
+    [SerializeField] Sprite attackSpeedBG;
+    [SerializeField] Sprite moveSpeedBG;
+    [SerializeField] Sprite maxHpBG;
 
     UpGradeData option;
 
@@ -17,10 +24,13 @@ public class LevelUpButton : MonoBehaviour
     {
         option = data;
 
-        titleText.text = data.upGradeName;
+        
         icon.sprite = data.icon;
         valueText.text = GetValueText(data);
 
+        SetCardVisual(data.type);
+
+        button.onClick.RemoveAllListeners();
         button.onClick.AddListener(OnClick);
     }
 
@@ -47,5 +57,27 @@ public class LevelUpButton : MonoBehaviour
         }
 
         return "";
+    }
+
+    void SetCardVisual(UpGradeType type)
+    {
+        switch (type)
+        {
+            case UpGradeType.AttackPower:
+                cardBackground.sprite = attackPowerBG;
+                break;
+
+            case UpGradeType.AttackSpeed:
+                cardBackground.sprite = attackSpeedBG;
+                break;
+
+            case UpGradeType.MoveSpeed:
+                cardBackground.sprite = moveSpeedBG;
+                break;
+
+            case UpGradeType.MaxHp:
+                cardBackground.sprite = maxHpBG;
+                break;
+        }
     }
 }

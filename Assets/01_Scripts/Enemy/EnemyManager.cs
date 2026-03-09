@@ -162,7 +162,10 @@ public class EnemyManager : MonoBehaviour
         float dis = Random.Range(spawnRadiusMin, spawnRadiusMax);
 
         Vector3 offset = new Vector3(randomDir.x, 0, randomDir.y) * dis;
-        return player.position + offset;
+        return new Vector3(
+        player.position.x + offset.x,
+        0f,
+        player.position.z + offset.z);
     }
 
     void SpawnBoss()

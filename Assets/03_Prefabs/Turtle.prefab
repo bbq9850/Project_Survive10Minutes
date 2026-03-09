@@ -543,8 +543,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b74335903ed26342a3481ab77499f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  separationRadius: 0.7
-  separationForce: 2
+  separationRadius: 1.5
+  pushForce: 1.2
 --- !u!114 &-3086224321416482387
 MonoBehaviour:
   m_ObjectHideFlags: 0

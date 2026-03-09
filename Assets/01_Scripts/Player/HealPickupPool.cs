@@ -39,7 +39,9 @@ public class HealPickupPool : MonoBehaviour
         }
 
         HealPickUp obj = pool.Dequeue();
+        position.y = 0.5f;
         obj.transform.position = position;
+        
         obj.gameObject.SetActive(true);
     }
 

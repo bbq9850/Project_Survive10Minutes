@@ -35,7 +35,6 @@ public class EnemyPool : MonoBehaviour
         {
             pools[prefab] = new Queue<EnemyCore>();
 
-            // 초기 생성
             for (int i = 0; i < initialSize; i++)
             {
                 pools[prefab].Enqueue(CreateNewEnemy(prefab));
