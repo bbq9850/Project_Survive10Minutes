@@ -12,6 +12,7 @@ public class LevelUpManager : MonoBehaviour
     [SerializeField] List<UpGradeData> upgrades;
     [SerializeField] LevelUpUI levelUpUI;
     [SerializeField] PlayerStat playerStat;
+    [SerializeField] PlayerWeaponController weaponController;
 
     void Start()
     {
@@ -50,7 +51,14 @@ public class LevelUpManager : MonoBehaviour
 
     public void SelectOption(UpGradeData option)
     {
-        playerStat.ApplyUpgrade(option);
+        if (option.type == UpGradeType.Weapon)
+        {
+            weaponController.AddWeapon(option.weaponData);
+        }
+        else
+        {
+            playerStat.ApplyUpgrade(option);
+        }
 
         levelUpUI.Close();
     }

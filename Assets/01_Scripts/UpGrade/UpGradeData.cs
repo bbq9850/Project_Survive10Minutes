@@ -10,7 +10,10 @@ public class UpGradeData : ScriptableObject
     public Sprite icon;
 
     public UpGradeType type;
+
     public float value;
+
+    public WeaponData weaponData;
 }
 
 public enum UpGradeType
@@ -18,5 +21,6 @@ public enum UpGradeType
     AttackPower,
     AttackSpeed,
     MoveSpeed,
-    MaxHp
+    MaxHp,
+    Weapon
 }
