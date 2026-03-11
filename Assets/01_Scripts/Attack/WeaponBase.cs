@@ -8,7 +8,28 @@ public abstract class WeaponBase : MonoBehaviour
 
     protected float timer;
 
+    protected int level = 1;
+    public int Level => level;
+
+    public int maxLevel = 5;
+
     [SerializeField] protected float baseAttackRate = 1f;
+    public WeaponData Data { get; private set; }
+
+    public void Init(WeaponData data)
+    {
+        Data = data;
+    }
+
+    public virtual void LevelUp(float value)
+    {
+        level++;
+    }
+
+    public bool IsMaxLevel()
+    {
+        return level >= maxLevel;
+    }
 
     protected virtual void Awake()
     {

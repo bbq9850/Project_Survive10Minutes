@@ -15,6 +15,15 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] Slider staminaSlider;
     [SerializeField] Text staminaText;
 
+    [Header("Weapon UI")]
+    [SerializeField] WeaponInventory weaponInventory;
+
+    [Header("Stat UI")]
+    [SerializeField] Text attackPowerText;
+    [SerializeField] Text attackSpeedText;
+    [SerializeField] Text moveSpeedText;
+    [SerializeField] Text maxHpText;
+
     [SerializeField] private PlayerStat stat;
 
     private void Awake()
@@ -38,6 +47,8 @@ public class PlayerHUD : MonoBehaviour
 
         UpdateHpBar(playerHealth.CurrentHP, stat.maxHP);
         UpdateStaminaBar(playerStamina.CurrentStamina, playerStamina.MaxStamina);
+
+        RefreshStatUI();
     }
 
     void OnMaxHpChanged(float newMax)
@@ -55,6 +66,23 @@ public class PlayerHUD : MonoBehaviour
     {
         staminaSlider.value = current / max;
         staminaText.text = $"{current:0}/{max:0}";
+    }
+
+    public void RefreshStatUI()
+    {
+        attackPowerText.text = $"{stat.attackPower}";
+        attackSpeedText.text = $"{stat.attackSpeed}";
+        moveSpeedText.text = $"{stat.moveSpeed}";
+        maxHpText.text = $"{stat.maxHP}";
+    }
+    public void AddWeaponUI(WeaponBase weapon)
+    {
+        weaponInventory.AddWeapon(weapon);
+    }
+
+    public void RefreshWeaponUI()
+    {
+        weaponInventory.Refresh();
     }
 
     void OnDestroy()

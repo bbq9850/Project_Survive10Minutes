@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5d41b4005bc58b4f8be9ae607a5996f, type: 3}
   m_Name: Add_Kunai
   m_EditorClassIdentifier: 
-  upGradeName: "\uCFE0\uB098\uC774 \uAC15\uD654"
-  icon: {fileID: 21300000, guid: 40a6a0e1af259b943889c6896f709b84, type: 3}
-  type: 4
+  upGradeName: "\uCFE0\uB098\uC774 \uD22C\uCC99 \uD68D\uB4DD"
+  type: 1
   value: 1
   weaponData: {fileID: 11400000, guid: 525ae3d890806d04a8fa4834aa441cd9, type: 2}
+  statType: 0
+  weaponType: 0

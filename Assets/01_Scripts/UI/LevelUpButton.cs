@@ -8,27 +8,26 @@ public class LevelUpButton : MonoBehaviour
 {
     
     [SerializeField] Text valueText;
-    [SerializeField] Image icon;
     [SerializeField] Button button;
-
     [SerializeField] Image cardBackground;
 
+    [Header("Stat BG")]
     [SerializeField] Sprite attackPowerBG;
     [SerializeField] Sprite attackSpeedBG;
     [SerializeField] Sprite moveSpeedBG;
     [SerializeField] Sprite maxHpBG;
 
+    [Header("Weapon BG")]
+    [SerializeField] Sprite kunaiBG;
     UpGradeData option;
 
     public void Setup(UpGradeData data)
     {
         option = data;
 
-        
-        icon.sprite = data.icon;
         valueText.text = GetValueText(data);
 
-        SetCardVisual(data.type);
+        SetCardVisual(data);
 
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(OnClick);
@@ -43,41 +42,72 @@ public class LevelUpButton : MonoBehaviour
     {
         switch (d.type)
         {
-            case UpGradeType.AttackPower:
-                return $"공격력 +{d.value}";
+            case UpGradeType.Stat:
+                return GetStatText(d);
 
-            case UpGradeType.AttackSpeed:
-                return $"공격속도 증가 +{d.value * 100f}% ";
+            case UpGradeType.WeaponUnlock:
+                return $"{d.weaponType} 획득";
 
-            case UpGradeType.MoveSpeed:
-                return $"이동속도 증가+{d.value * 100f}%";
-
-            case UpGradeType.MaxHp:
-                return $"최대 체력+{d.value}";
+            case UpGradeType.WeaponUpgrade:
+                return $"{d.weaponType} 강화 +{d.value}";
         }
 
         return "";
     }
 
-    void SetCardVisual(UpGradeType type)
+    string GetStatText(UpGradeData d)
     {
-        switch (type)
+        switch (d.statType)
         {
-            case UpGradeType.AttackPower:
-                cardBackground.sprite = attackPowerBG;
-                break;
+            case StatType.AttackPower:
+                return $"공격력 +{d.value}";
 
-            case UpGradeType.AttackSpeed:
-                cardBackground.sprite = attackSpeedBG;
-                break;
+            case StatType.AttackSpeed:
+                return $"공격속도 +{d.value * 100f}%";
 
-            case UpGradeType.MoveSpeed:
-                cardBackground.sprite = moveSpeedBG;
-                break;
+            case StatType.MoveSpeed:
+                return $"이동속도 +{d.value * 100f}%";
 
-            case UpGradeType.MaxHp:
-                cardBackground.sprite = maxHpBG;
-                break;
+            case StatType.MaxHp:
+                return $"최대체력 +{d.value}";
+        }
+
+        return "";
+    }
+
+    void SetCardVisual(UpGradeData data)
+    {
+        if (data.type == UpGradeType.Stat)
+        {
+            switch (data.statType)
+            {
+                case StatType.AttackPower:
+                    cardBackground.sprite = attackPowerBG;
+                    break;
+
+                case StatType.AttackSpeed:
+                    cardBackground.sprite = attackSpeedBG;
+                    break;
+
+                case StatType.MoveSpeed:
+                    cardBackground.sprite = moveSpeedBG;
+                    break;
+
+                case StatType.MaxHp:
+                    cardBackground.sprite = maxHpBG;
+                    break;
+            }
+        }
+
+        if (data.type == UpGradeType.WeaponUnlock ||
+            data.type == UpGradeType.WeaponUpgrade)
+        {
+            switch (data.weaponType)
+            {
+                case WeaponType.Kunai:
+                    cardBackground.sprite = kunaiBG;
+                    break;
+            }
         }
     }
 }

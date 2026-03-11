@@ -11,26 +11,29 @@ public class PlayerStat : MonoBehaviour
     public float maxHP = 100;
 
     public event Action<float> OnMaxHpChanged;
-    //public event Action<float> OnAttackPowerChanged;
+    public event Action<float> OnAttackPowerChanged;
 
     public void ApplyUpgrade(UpGradeData option)
     {
-        switch (option.type)
+        if (option.type != UpGradeType.Stat)
+            return;
+
+        switch (option.statType)
         {
-            case UpGradeType.AttackPower:
+            case StatType.AttackPower:
                 attackPower += option.value;
-                //OnAttackPowerChanged?.Invoke(attackPower);
+                OnAttackPowerChanged?.Invoke(attackPower);
                 break;
 
-            case UpGradeType.AttackSpeed:
+            case StatType.AttackSpeed:
                 attackSpeed += option.value;
                 break;
 
-            case UpGradeType.MoveSpeed:
+            case StatType.MoveSpeed:
                 moveSpeed += option.value;
                 break;
 
-            case UpGradeType.MaxHp:
+            case StatType.MaxHp:
                 maxHP += option.value;
                 OnMaxHpChanged?.Invoke(maxHP);
                 break;

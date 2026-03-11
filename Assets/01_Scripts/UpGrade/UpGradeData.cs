@@ -7,20 +7,30 @@ public class UpGradeData : ScriptableObject
 {
     public string upGradeName;
 
-    public Sprite icon;
-
     public UpGradeType type;
 
     public float value;
 
     public WeaponData weaponData;
+
+    public StatType statType;
+    public WeaponType weaponType;
 }
 
 public enum UpGradeType
 {
+    Stat,
+    WeaponUnlock,
+    WeaponUpgrade
+}
+public enum StatType
+{
     AttackPower,
     AttackSpeed,
     MoveSpeed,
-    MaxHp,
-    Weapon
+    MaxHp
+}
+public enum WeaponType
+{
+    Kunai
 }
