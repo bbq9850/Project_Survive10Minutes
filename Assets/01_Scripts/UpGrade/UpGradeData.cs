@@ -32,5 +32,6 @@ public enum StatType
 }
 public enum WeaponType
 {
+    Explosion,
     Kunai
 }

@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class AutoAttackWeapon : WeaponBase
 {
-    [SerializeField] float attackRange = 5f;
-
     protected override void Attack()
     {
         EnemyCore target = FindClosestEnemy();
         if (target == null) return;
 
-        target.TakeDamage(stat.attackPower);
+        float damage = stat.attackPower * weaponPower;
+
+        target.TakeDamage(damage);
 
         HitEffectPool.Instance.Play(target.transform.position);
     }
@@ -27,8 +27,8 @@ public class AutoAttackWeapon : WeaponBase
             if (!enemy.gameObject.activeInHierarchy) continue;
 
             float dist = Vector3.Distance(transform.position, enemy.transform.position);
-
-            if (dist < minDist && dist <= attackRange)
+            
+            if (dist < minDist && dist <= weaponRange)
             {
                 minDist = dist;
                 closest = enemy;

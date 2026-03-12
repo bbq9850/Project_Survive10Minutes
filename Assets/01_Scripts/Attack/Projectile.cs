@@ -8,16 +8,26 @@ public class Projectile : MonoBehaviour
     float damage;
 
     public float speed = 6f;
+    float lifeTime = 7f;
+    float timer;
 
     public void Init(Vector3 dir, float dmg)
     {
-        direction = dir;
+        direction = dir.normalized;
         damage = dmg;
+        timer = 0;
     }
 
     void Update()
     {
         transform.position += direction * speed * Time.deltaTime;
+
+        timer += Time.deltaTime;
+
+        if(timer > lifeTime)
+        {
+            ProjectilePool.Instance.Return(gameObject);
+        }
     }
 
     void OnTriggerEnter(Collider other)

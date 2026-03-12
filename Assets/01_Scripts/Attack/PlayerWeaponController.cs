@@ -9,13 +9,38 @@ public class PlayerWeaponController : MonoBehaviour
 
     [SerializeField] PlayerHUD playerHUD;
 
+    [SerializeField] WeaponData basicWeapon;
+    PlayerStat stat;
+
+    private void Awake()
+    {
+        stat = GetComponent<PlayerStat>();
+    }
+    private void Start()
+    {
+        AddWeapon(basicWeapon);
+    }
     public void AddWeapon(WeaponData data)
     {
+        WeaponBase existingWeapon = GetWeapon(data);
+
+        if (existingWeapon != null)
+        {
+            if (!existingWeapon.IsMaxLevel())
+            {
+                existingWeapon.LevelUp(1);
+                RefreshUI();
+            }
+
+            return;
+        }
+
+
         GameObject obj = Instantiate(data.weaponPrefab, transform);
 
         WeaponBase weapon = obj.GetComponent<WeaponBase>();
 
-        weapon.Init(data);
+        weapon.Init(data, stat);
 
         weapons.Add(weapon);
 

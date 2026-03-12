@@ -3537,7 +3537,6 @@ GameObject:
   - component: {fileID: 903500777}
   - component: {fileID: 903500778}
   - component: {fileID: 903500780}
-  - component: {fileID: 903500779}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3820,21 +3819,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 50
   regenRate: 5
---- !u!114 &903500779
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 903500759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dee2e78e106cb0641a78e5cb6ca76516, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxLevel: 5
-  baseAttackRate: 1
-  attackRange: 5
 --- !u!114 &903500780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3849,6 +3833,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponInventory: {fileID: 2048181240}
   playerHUD: {fileID: 1155854634}
+  basicWeapon: {fileID: 11400000, guid: 5bf5261c5b66217408455c38c0e8853a, type: 2}
 --- !u!1 &903781352
 GameObject:
   m_ObjectHideFlags: 0
@@ -6203,6 +6188,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4520aef3e37a34f4f94177447e51f2f9, type: 2}
   - {fileID: 11400000, guid: c8b5d2a40d69e524188505b2711c5ae3, type: 2}
   - {fileID: 11400000, guid: 322ce46002175d84b89c213493f6e172, type: 2}
+  - {fileID: 11400000, guid: 17f03f5a281499043919b675bdaa34ea, type: 2}
+  - {fileID: 11400000, guid: 81232e90726cdc7498b13a13cfb8aede, type: 2}
   levelUpUI: {fileID: 1000843448}
   playerStat: {fileID: 903500776}
   weaponController: {fileID: 903500780}
@@ -6810,7 +6797,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1883521661}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1551330143}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1883521661
 MonoBehaviour:
   m_ObjectHideFlags: 0

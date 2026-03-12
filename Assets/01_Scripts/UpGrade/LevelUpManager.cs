@@ -99,8 +99,8 @@ public class LevelUpManager : MonoBehaviour
 
                 weaponController.AddWeapon(option.weaponData);
 
-                WeaponBase newWeapon =
-                weaponController.GetWeapon(option.weaponData);
+                //WeaponBase newWeapon =
+                //weaponController.GetWeapon(option.weaponData);
 
                 break;
 
@@ -110,7 +110,7 @@ public class LevelUpManager : MonoBehaviour
                     weaponController.GetWeapon(option.weaponData);
 
                 if (weapon != null)
-                    weapon.LevelUp(option.value);
+                    weapon.LevelUp(1);
 
                 playerHUD.RefreshWeaponUI();
 

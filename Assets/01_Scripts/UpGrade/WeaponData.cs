@@ -10,4 +10,7 @@ public class WeaponData : ScriptableObject
     public Sprite icon;
 
     public GameObject weaponPrefab;
+
+    [Header("Level")]
+    public WeaponLevelData[] levels;
 }

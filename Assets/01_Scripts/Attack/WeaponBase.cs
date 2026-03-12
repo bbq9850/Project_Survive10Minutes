@@ -13,17 +13,42 @@ public abstract class WeaponBase : MonoBehaviour
 
     public int maxLevel = 5;
 
-    [SerializeField] protected float baseAttackRate = 1f;
+    protected float weaponPower;
+    protected float weaponRate;
+    protected float weaponRange;
+
+    protected int projectileCount = 1;
+
+    bool isInitialized = false;
     public WeaponData Data { get; private set; }
 
-    public void Init(WeaponData data)
+    public void Init(WeaponData data, PlayerStat playerStat)
     {
         Data = data;
+        stat = playerStat;
+
+        ApplyLevelStat();
+
+        isInitialized = true;
+    }
+    void ApplyLevelStat()
+    {
+        WeaponLevelData levelData = Data.levels[level - 1];
+
+        weaponPower = levelData.weaponPower;
+        weaponRate = levelData.weaponRate;
+        weaponRange = levelData.weaponRange;
+        projectileCount = levelData.projectileCount;
     }
 
     public virtual void LevelUp(float value)
     {
+        if (level >= Data.levels.Length)
+            return;
+
         level++;
+
+        ApplyLevelStat();
     }
 
     public bool IsMaxLevel()
@@ -31,16 +56,13 @@ public abstract class WeaponBase : MonoBehaviour
         return level >= maxLevel;
     }
 
-    protected virtual void Awake()
-    {
-        stat = GetComponentInParent<PlayerStat>();
-    }
-
     protected virtual void Update()
     {
+        if (!isInitialized) return;
+
         timer += Time.deltaTime;
 
-        float interval = 1f / (stat.attackSpeed * baseAttackRate);
+        float interval = 1f / (stat.attackSpeed * weaponRate);
 
         if (timer >= interval)
         {

@@ -9,10 +9,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5d41b4005bc58b4f8be9ae607a5996f, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f9d747c014c1c141a9d2065512654d3, type: 3}
   m_Name: Explosion
   m_EditorClassIdentifier: 
-  upGradeName: "\uD3ED\uBC1C\uB9C8\uBC95\uAC15\uD654"
-  icon: {fileID: 21300000, guid: 74cfdc2ba7123444c98f111be496e775, type: 3}
-  type: 0
-  value: 0
+  weaponName: "\uD3ED\uBC1C\uB9C8\uBC95"
+  icon: {fileID: 21300000, guid: 9a3fc94fb663a134ebd110390ec2a204, type: 3}
+  weaponPrefab: {fileID: 3662991058302266356, guid: cba1bd0df478ef94cb62938512a42080, type: 3}
+  levels:
+  - weaponRange: 5
+    weaponRate: 1
+    weaponPower: 1
+    projectileCount: 1
+  - weaponRange: 6
+    weaponRate: 1.2
+    weaponPower: 1.2
+    projectileCount: 1
+  - weaponRange: 7
+    weaponRate: 1.4
+    weaponPower: 1.4
+    projectileCount: 1
+  - weaponRange: 7
+    weaponRate: 1.6
+    weaponPower: 1.6
+    projectileCount: 1
+  - weaponRange: 8
+    weaponRate: 1.8
+    weaponPower: 1.8
+    projectileCount: 1

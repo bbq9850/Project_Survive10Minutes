@@ -19,6 +19,7 @@ public class LevelUpButton : MonoBehaviour
 
     [Header("Weapon BG")]
     [SerializeField] Sprite kunaiBG;
+    [SerializeField] Sprite explosionBG;
     UpGradeData option;
 
     public void Setup(UpGradeData data)
@@ -49,7 +50,7 @@ public class LevelUpButton : MonoBehaviour
                 return $"{d.weaponType} È¹µæ";
 
             case UpGradeType.WeaponUpgrade:
-                return $"{d.weaponType} °­È­ +{d.value}";
+                return $"{d.weaponType} °­È­";
         }
 
         return "";
@@ -108,6 +109,11 @@ public class LevelUpButton : MonoBehaviour
                     cardBackground.sprite = kunaiBG;
                     break;
             }
+        }
+
+        if (data.type == UpGradeType.WeaponUpgrade)
+        {
+            switch()
         }
     }
 }

@@ -218,6 +218,7 @@ MonoBehaviour:
   moveSpeedBG: {fileID: 21300000, guid: cb1c3a3fa125c1a4fb8dd268fe370c23, type: 3}
   maxHpBG: {fileID: 21300000, guid: 6d85dd86b0fc7124f8cf88170e99b259, type: 3}
   kunaiBG: {fileID: 21300000, guid: f2aca0841b3190f42a4dfdadd59785b4, type: 3}
+  explosionBG: {fileID: 21300000, guid: 2e9c72e6c2cb71d4e8887624da1f0f08, type: 3}
 --- !u!1 &9014138712198424889
 GameObject:
   m_ObjectHideFlags: 0

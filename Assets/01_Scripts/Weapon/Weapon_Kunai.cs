@@ -11,19 +11,29 @@ public class Weapon_Kunai : WeaponBase
         EnemyCore target = FindClosestEnemy();
         if (target == null) return;
 
-        Vector3 dir =
+        Vector3 baseDir =
             (target.transform.position - transform.position).normalized;
-        dir.y = 0f;
+        baseDir.y = 0;
 
-        GameObject arrow =
-            ProjectilePool.Instance.Get();
+        for (int i = 0; i < projectileCount; i++)
+        {
+            float angleOffset = (i - (projectileCount - 1) / 2f) * 10f;
 
-        arrow.transform.position = transform.position;
+            Vector3 dir =
+                Quaternion.Euler(0, angleOffset, 0) * baseDir;
 
-        arrow.transform.rotation = Quaternion.LookRotation(dir) * Quaternion.Euler(90, 0, 0);
+            GameObject kunai = ProjectilePool.Instance.Get();
 
-        arrow.GetComponent<Projectile>()
-            .Init(dir, stat.attackPower);
+            kunai.transform.position = transform.position;
+
+            kunai.transform.rotation =
+                Quaternion.LookRotation(dir) * Quaternion.Euler(90, 0, 0);
+
+            float damage = stat.attackPower * weaponPower;
+
+            kunai.GetComponent<Projectile>()
+                .Init(dir, damage);
+        }
     }
 
     EnemyCore FindClosestEnemy()
@@ -34,11 +44,12 @@ public class Weapon_Kunai : WeaponBase
         foreach (var enemy in EnemyManager.instance.ActiveEnemies)
         {
             if (enemy == null) continue;
+            if (!enemy.gameObject.activeInHierarchy) continue;
 
             float dist =
                 Vector3.Distance(transform.position, enemy.transform.position);
 
-            if (dist < minDist)
+            if (dist < minDist && dist <= weaponRange)
             {
                 minDist = dist;
                 closest = enemy;
@@ -48,3 +59,4 @@ public class Weapon_Kunai : WeaponBase
         return closest;
     }
 }
+
