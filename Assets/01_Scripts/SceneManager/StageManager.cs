@@ -22,8 +22,13 @@ public class StageManager : MonoBehaviour
 
         Debug.Log("Stage Clear!");
 
-        Time.timeScale = 0f;
-
         StageClearUI.Instance.Show();
+
+        StopGameTime();
+    }
+
+    void StopGameTime()
+    {
+        Time.timeScale = 0f;
     }
 }

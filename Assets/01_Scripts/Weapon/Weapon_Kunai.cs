@@ -11,9 +11,13 @@ public class Weapon_Kunai : WeaponBase
         EnemyCore target = FindClosestEnemy();
         if (target == null) return;
 
-        Vector3 baseDir =
-            (target.transform.position - transform.position).normalized;
-        baseDir.y = 0;
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = target.transform.position;
+
+        startPos.y = 0.5f;
+        targetPos.y = 0.5f;
+
+        Vector3 baseDir = (targetPos - startPos).normalized;
 
         for (int i = 0; i < projectileCount; i++)
         {
@@ -24,7 +28,7 @@ public class Weapon_Kunai : WeaponBase
 
             GameObject kunai = ProjectilePool.Instance.Get();
 
-            kunai.transform.position = transform.position;
+            kunai.transform.position = startPos;
 
             kunai.transform.rotation =
                 Quaternion.LookRotation(dir) * Quaternion.Euler(90, 0, 0);

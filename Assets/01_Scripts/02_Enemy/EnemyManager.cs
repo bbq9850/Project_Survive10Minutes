@@ -153,7 +153,7 @@ public class EnemyManager : MonoBehaviour
 
         if (BossWarningUI.Instance != null)
         {
-            BossWarningUI.Instance.ShowWarning("엘리트 몬스터가 출현합니다");
+            BossWarningUI.Instance.ShowWarning("ELITE WARNING");
         }
         Debug.Log($"Elite Spawned");
     }
@@ -190,7 +190,7 @@ public class EnemyManager : MonoBehaviour
 
         if (BossWarningUI.Instance != null)
         {
-            BossWarningUI.Instance.ShowWarning("보스 몬스터가 출현합니다");
+            BossWarningUI.Instance.ShowWarning("BOSS WARNING");
         }
     }
 
