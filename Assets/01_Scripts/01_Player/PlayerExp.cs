@@ -34,7 +34,7 @@ public class PlayerExp : MonoBehaviour
     int GetExpToNext(int level)
     {
         return Mathf.RoundToInt(
-            5 + level * 9 + level * level * 0.6f
+            8 + level * 7 + Mathf.Pow(level, 1.5f) * 2f
         );
     }
 

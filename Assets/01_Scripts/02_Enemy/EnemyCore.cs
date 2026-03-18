@@ -12,6 +12,9 @@ public class EnemyCore : MonoBehaviour
     EnemyMove enemyMove;
     EnemyExpDrop enemyExpDrop;
 
+    [SerializeField] GameObject magnetPrefab;
+    [SerializeField] float magnetDropChance = 1f;
+
     bool isDead;
 
     public EnemyCore OriginalPrefab { get; private set; }
@@ -61,6 +64,7 @@ public class EnemyCore : MonoBehaviour
                 transform.position, data.expValue);
 
             TryDropHeal();
+            TryDropMagnet();
         }
 
         EnemyManager.instance.OnEnemyDead(this);
@@ -86,6 +90,20 @@ public class EnemyCore : MonoBehaviour
             return;
         }
         enemyHealth.TakeDamage(damage);
+    }
+
+    void TryDropMagnet()
+    {
+        if (data == null) return;
+
+        if (!data.isElite) return;
+
+        if (Random.value <= magnetDropChance)
+        {
+            Vector3 pos = transform.position;
+            pos.y = 0.5f;
+            Instantiate(magnetPrefab, pos, Quaternion.identity);
+        }
     }
 
 }

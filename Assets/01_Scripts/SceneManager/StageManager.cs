@@ -6,12 +6,14 @@ public class StageManager : MonoBehaviour
 {
     public static StageManager Instance;
     [SerializeField] StageClearUI stageClearUI;
+    UITween tween;
 
     bool isStageClear;
 
     void Awake()
     {
         Instance = this;
+        tween = stageClearUI.GetComponent<UITween>();
     }
 
     public void OnBossDead()
@@ -23,6 +25,7 @@ public class StageManager : MonoBehaviour
         Debug.Log("Stage Clear!");
 
         StageClearUI.Instance.Show();
+        tween.PlayOpen();
 
         StopGameTime();
     }

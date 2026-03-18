@@ -19,7 +19,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] float spawnRadiusMax = 28f;
 
     float spawnInterval = 1.0f;
+
     int maxEnemyCount = 90;
+    
 
     float timeElapsed;
 
@@ -70,8 +72,23 @@ public class EnemyManager : MonoBehaviour
             float dynamicInterval =
             spawnInterval / spawnMul;
 
-            if (ActiveEnemies.Count < maxEnemyCount)
+            int spawnCount = Mathf.RoundToInt(spawnMul);
+            spawnCount = Mathf.Clamp(spawnCount, 1, 5);
+
+            int dynamicMax = Mathf.RoundToInt(
+                             maxEnemyCount 
+                             * EnemyDifficultySystem.Instance.GetSpawnMultiplier()
+                            );
+
+            dynamicMax = Mathf.Clamp(dynamicMax, 90, 200);
+
+            for (int i = 0; i < spawnCount; i++)
+            {
+                if (ActiveEnemies.Count >= dynamicMax)
+                    break;
+
                 SpawnEnemy();
+            }
 
             yield return new WaitForSeconds(dynamicInterval);
         }
@@ -130,8 +147,8 @@ public class EnemyManager : MonoBehaviour
             EnemyDifficultySystem.Instance.GetDamageMultiplier();
 
         EnemyData runtimeData = Instantiate(baseData);
-        runtimeData.maxHP += hpMul;
-        runtimeData.attackDamage += Mathf.RoundToInt(dmgMul);
+        runtimeData.maxHP *= hpMul;
+        runtimeData.attackDamage *= Mathf.RoundToInt(dmgMul);
 
         enemy.OnActiveEnemy(runtimeData, player);
         ActiveEnemies.Add(enemy);

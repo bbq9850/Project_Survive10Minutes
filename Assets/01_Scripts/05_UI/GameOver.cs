@@ -7,6 +7,13 @@ public class GameOver : MonoBehaviour
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private GameObject gameOverPanel;
 
+    UITween tween;
+
+    void Awake()
+    {
+        tween = gameOverPanel.GetComponent<UITween>();
+    }
+
     private void Start()
     {
         playerHealth.OnDead += HandleGameOver;
@@ -17,6 +24,7 @@ public class GameOver : MonoBehaviour
     {
         Time.timeScale = 0f;   
         gameOverPanel.SetActive(true);
+        tween.PlayOpen();
     }
 
     private void OnDestroy()

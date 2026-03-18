@@ -141,6 +141,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   target: {fileID: 0}
+  magnetPrefab: {fileID: 8050537342152234946, guid: 2b18592552e48ff4da0a77acadf16d41, type: 3}
+  magnetDropChance: 1
 --- !u!114 &8002120928675756978
 MonoBehaviour:
   m_ObjectHideFlags: 0

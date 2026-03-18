@@ -83,4 +83,16 @@ public class ExpOrbPool : MonoBehaviour
         pool.Enqueue(orb);
         inactiveSet.Add(orb);
     }
+
+    public void ActivateMagnetAll()
+    {
+        foreach (var orb in allOrbs)
+        {
+            if (orb == null) continue;
+
+            if (inactiveSet.Contains(orb)) continue;
+
+            orb.StartMagnet();
+        }
+    }
 }

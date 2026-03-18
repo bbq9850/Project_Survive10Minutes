@@ -38,7 +38,7 @@ public class EnemyDifficultySystem : MonoBehaviour
     {
         float minute = GetMinute();
 
-        return Mathf.Pow(1.18f, minute);
+        return Mathf.Pow(1.18f, minute) * 0.7f;
     }
 
     public float GetDamageMultiplier()
@@ -52,6 +52,6 @@ public class EnemyDifficultySystem : MonoBehaviour
     {
         float minute = GetMinute();
 
-        return 1f + (minute * 0.12f);
+        return 1f + (minute * 0.35f);
     }
 }

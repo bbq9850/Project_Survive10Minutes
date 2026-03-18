@@ -475,7 +475,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   separationRadius: 0.7
-  separationForce: 2
+  pushForce: 1.2
 --- !u!114 &-1814206420481907655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,6 +503,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 0}
   target: {fileID: 0}
+  magnetPrefab: {fileID: 8050537342152234946, guid: 2b18592552e48ff4da0a77acadf16d41, type: 3}
+  magnetDropChance: 1
 --- !u!136 &2030816572145554602
 CapsuleCollider:
   m_ObjectHideFlags: 0

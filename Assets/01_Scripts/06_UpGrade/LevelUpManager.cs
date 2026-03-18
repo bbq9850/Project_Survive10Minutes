@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,9 +18,12 @@ public class LevelUpManager : MonoBehaviour
     [SerializeField] PlayerStat playerStat;
     [SerializeField] PlayerWeaponController weaponController;
 
+    UITween tween;
+
     private void Awake()
     {
         Instance = this;
+        tween = levelUpUI.GetComponent<UITween>();
     }
 
     public void OpenLevelUp()
@@ -27,6 +31,7 @@ public class LevelUpManager : MonoBehaviour
         List<UpGradeData> selected = GetRandomUpgrades(3);
 
         levelUpUI.Open(selected);
+        tween.PlayOpen();
     }
 
     List<UpGradeData> GetRandomUpgrades(int count)

@@ -125,6 +125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d70ae33a19482ce438d23194c3d81d4b, type: 2}
   target: {fileID: 0}
+  magnetPrefab: {fileID: 8050537342152234946, guid: 2b18592552e48ff4da0a77acadf16d41, type: 3}
+  magnetDropChance: 1
 --- !u!114 &-3087042103997624110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b74335903ed26342a3481ab77499f43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  separationRadius: 1.5
+  pushForce: 1.2
 --- !u!114 &-2237406558609623451
 MonoBehaviour:
   m_ObjectHideFlags: 0

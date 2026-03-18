@@ -7,31 +7,43 @@ public class ExpOrb : MonoBehaviour
     int expAmount;
     ExpOrbPool pool;
 
+    bool isMagnet;
+
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float attractDistance = 2f;
     [SerializeField] float collectDistance = 0.5f;
 
     bool isActive;
 
+    Transform player;
+
     public void Init(ExpOrbPool pool)
     {
         this.pool = pool;
+        player = PlayerCore.Instance.transform;
     }
 
     
 
     void Update()
     {
-        if (!isActive)
-            return;
-
-        Transform player = PlayerCore.Instance.transform;
-
-        if (player == null)
+        if (!isActive || player == null)
             return;
 
         Vector3 dir = player.position - transform.position;
         float dist = dir.magnitude;
+
+        if (isMagnet)
+        {
+            float step = moveSpeed * 2f * Time.deltaTime;
+            transform.position += dir.normalized * step;
+
+            if (dist <= collectDistance)
+            {
+                Collect();
+            }
+            return;
+        }
 
         if (dist <= collectDistance)
         {
@@ -61,6 +73,8 @@ public class ExpOrb : MonoBehaviour
         transform.position = position;
         expAmount = amount;
 
+        isMagnet = false;
+
         isActive = true;
         gameObject.SetActive(true);
         
@@ -68,6 +82,12 @@ public class ExpOrb : MonoBehaviour
     public void Deactivate()
     {
         isActive = false;
+        isMagnet = false;
         gameObject.SetActive(false);
+    }
+
+    public void StartMagnet()
+    {
+        isMagnet = true;
     }
 }

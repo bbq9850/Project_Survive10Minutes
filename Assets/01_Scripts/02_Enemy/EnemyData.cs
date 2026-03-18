@@ -17,5 +17,6 @@ public class EnemyData : ScriptableObject
 
     public EnemyCore enemyPrefab;
 
+    public bool isElite;
     public bool isBoss;
 }

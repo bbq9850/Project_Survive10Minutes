@@ -9,11 +9,19 @@ public class PauseManager : MonoBehaviour
 
     private bool isPaused;
 
+    UITween tween;
+
+    void Awake()
+    {
+        tween = pausePanel.GetComponent<UITween>();
+    }
+
     public void Pause()
     {
         Time.timeScale = 0f;
         gameTimer.PauseTime();
         pausePanel.SetActive(true);
+        tween.PlayOpen();
         isPaused = true;
     }
 
