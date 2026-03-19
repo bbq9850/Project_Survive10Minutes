@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Explosion
   m_EditorClassIdentifier: 
   weaponName: "\uD3ED\uBC1C\uB9C8\uBC95"
-  icon: {fileID: 21300000, guid: 9a3fc94fb663a134ebd110390ec2a204, type: 3}
+  icon: {fileID: 21300000, guid: a8a2ba773aaea8542bfddd2292719a93, type: 3}
+  weaponType: 0
   weaponPrefab: {fileID: 3662991058302266356, guid: cba1bd0df478ef94cb62938512a42080, type: 3}
   levels:
   - weaponRange: 5

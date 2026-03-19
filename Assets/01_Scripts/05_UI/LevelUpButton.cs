@@ -18,7 +18,7 @@ public class LevelUpButton : MonoBehaviour
     [SerializeField] Sprite maxHpBG;
 
     [Header("Weapon BG")]
-    [SerializeField] Sprite kunaiBG;
+    [SerializeField] Sprite MagicArrowBG;
     [SerializeField] Sprite explosionBG;
     UpGradeData option;
 
@@ -104,8 +104,8 @@ public class LevelUpButton : MonoBehaviour
         {
             switch (data.weaponData.weaponType)
             {
-                case WeaponType.Kunai:
-                    cardBackground.sprite = kunaiBG;
+                case WeaponType.MagicArrow:
+                    cardBackground.sprite = MagicArrowBG;
                     break;
             }
         }
@@ -114,8 +114,8 @@ public class LevelUpButton : MonoBehaviour
         {
             switch (data.weaponData.weaponType)
             {
-                case WeaponType.Kunai:
-                    cardBackground.sprite = kunaiBG;
+                case WeaponType.MagicArrow:
+                    cardBackground.sprite = MagicArrowBG;
                     break;
 
                 case WeaponType.Explosion:

@@ -7,8 +7,9 @@ public class GameSceneManager : MonoBehaviour
 {
     public static GameSceneManager Instance;
 
-    [SerializeField] string lobbyScene = "ProtoType_Lobby";
-    [SerializeField] string mainScene = "ProtoType_Main";
+    [SerializeField] string lobbyScene = "00_Lobby";
+    [SerializeField] string stage_01 = "01_Stage01";
+    [SerializeField] string stage_02 = "01_Stage02";
 
     bool isLoading;
 
@@ -21,17 +22,22 @@ public class GameSceneManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
     }
 
-    public void StartMain()
+    public void StartStage01()
     {
-        LoadScene(mainScene);
+        LoadScene(stage_01);
+    }
+
+    public void StartStage02()
+    {
+        LoadScene(stage_02);
     }
 
     public void RestartGame()
     {
-        LoadScene(mainScene);
+        LoadScene(stage_01);
     }
 
     public void GoToLobby()

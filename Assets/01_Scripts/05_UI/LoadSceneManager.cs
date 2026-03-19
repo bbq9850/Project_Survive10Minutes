@@ -6,7 +6,7 @@ public class LoadSceneManager : MonoBehaviour
 {
     public void OnClickStart()
     {
-        GameSceneManager.Instance.StartMain();
+        GameSceneManager.Instance.StartStage01();
     }
 
     public void OnClickRestart()
