@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +30,11 @@ public class PauseManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         gameTimer.ResumeTime();
-        pausePanel.SetActive(false);
+        tween.PlayClose(() =>
+        {
+            pausePanel.SetActive(false); 
+        });
+        
         isPaused = false;
     }
 

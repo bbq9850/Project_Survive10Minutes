@@ -56,9 +56,9 @@ public class EnemyCore : MonoBehaviour
         }
 
         isDead = true;
-        KillCountManager.Instance.AddKill();
-        
-        if(data != null)
+        GameManager.Instance.AddKill();
+
+        if (data != null)
         {
             ExpOrbPool.Instance.Spawn(
                 transform.position, data.expValue);

@@ -19,5 +19,5 @@ MonoBehaviour:
   expValue: 300
   healDropChance: 1
   enemyPrefab: {fileID: -1088325219542919038, guid: b5990b03c396e3447acacaac2687714a, type: 3}
-  isElite: 0
+  isElite: 1
   isBoss: 0

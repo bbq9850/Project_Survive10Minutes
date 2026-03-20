@@ -10,18 +10,23 @@ public class KillCountUI : MonoBehaviour
 
     void Start()
     {
-        KillCountManager.Instance.OnKill += UpdateKillCount;
-        UpdateKillCount(KillCountManager.Instance.KillCount);
+        if (GameManager.Instance == null)
+        {
+            Debug.Log("GameManager Null!");
+            return;
+        }
+        GameManager.Instance.OnKillCountChanged += UpdateKillCount;
+        UpdateKillCount(GameManager.Instance.Data.killCount);
     }
 
     void UpdateKillCount(int killCount)
     {
-        killCountText.text = $"{killCount:00}";
+        killCountText.text = killCount.ToString("D2");
     }
 
     private void OnDestroy()
     {
-        if (KillCountManager.Instance != null)
-            KillCountManager.Instance.OnKill -= UpdateKillCount;
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnKillCountChanged -= UpdateKillCount;
     }
 }

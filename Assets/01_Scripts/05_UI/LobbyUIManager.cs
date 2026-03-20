@@ -5,22 +5,38 @@ using UnityEngine;
 public class LobbyUIManager : MonoBehaviour
 {
     [SerializeField] GameObject sellectStagePanel;
+    [SerializeField] GameObject optionPanel;
 
-    UITween tween;
+    UITween sellectTween;
+    UITween optionTween;
 
     void Awake()
     {
-        tween = sellectStagePanel.GetComponent<UITween>();
+        sellectTween = sellectStagePanel.GetComponent<UITween>();
+        optionTween = optionPanel.GetComponent<UITween>();
     }
 
     public void OnSellectStage()
     {
         sellectStagePanel.SetActive(true);
-        tween.PlayOpen();
+        sellectTween?.PlayOpen();
     }
 
     public void QuitSellectStage()
     {
         sellectStagePanel.SetActive(false);
+        sellectTween?.PlayClose();
+    }
+
+    public void OnOption()
+    {
+        optionPanel.SetActive(true);
+        optionTween?.PlayOpen();
+    }
+
+    public void QuitOption()
+    {
+        optionPanel.SetActive(false);
+        optionTween?.PlayClose();
     }
 }

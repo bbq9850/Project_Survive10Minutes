@@ -18,22 +18,22 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3381949920499264514, guid: 823e8200d99fd0f4a9174c96a7a36b55, type: 3}
   levels:
   - weaponRange: 8
-    weaponRate: 2
+    weaponRate: 1
     weaponPower: 1
     projectileCount: 1
   - weaponRange: 8
-    weaponRate: 2.2
+    weaponRate: 1.2
     weaponPower: 1.2
     projectileCount: 2
   - weaponRange: 9
-    weaponRate: 2.4
+    weaponRate: 1.4
     weaponPower: 1.5
     projectileCount: 3
   - weaponRange: 9
-    weaponRate: 2.6
+    weaponRate: 1.6
     weaponPower: 2
     projectileCount: 4
   - weaponRange: 10
-    weaponRate: 3
+    weaponRate: 2
     weaponPower: 2.5
     projectileCount: 5

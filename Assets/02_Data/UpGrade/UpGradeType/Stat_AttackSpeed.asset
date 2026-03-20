@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upGradeName: "\uACF5\uACA9\uC18D\uB3C4 \uC99D\uAC00"
   type: 0
-  value: 1
+  value: 0.25
   weaponData: {fileID: 0}
   statType: 1
-  weaponType: 0
