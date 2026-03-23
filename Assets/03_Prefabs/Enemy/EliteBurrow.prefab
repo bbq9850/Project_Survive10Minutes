@@ -464,6 +464,7 @@ MonoBehaviour:
   target: {fileID: 0}
   magnetPrefab: {fileID: 8050537342152234946, guid: 2b18592552e48ff4da0a77acadf16d41, type: 3}
   magnetDropChance: 1
+  coinPrefab: {fileID: 6562425460810140477, guid: 9f8f124e5f084c24faa274759209d2d7, type: 3}
 --- !u!1 &2748282422418694191
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,8 @@ MonoBehaviour:
   attackDamage: 10
   expValue: 1
   healDropChance: 0.02
+  goldDropChance: 0.01
+  dropGold: 10
   enemyPrefab: {fileID: 8956768195147019018, guid: 30c9c4d6b5f36f5448600fe1f50674b5, type: 3}
   isElite: 0
   isBoss: 0

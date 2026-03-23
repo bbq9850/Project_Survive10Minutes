@@ -9,9 +9,6 @@ public class GameManager : MonoBehaviour
 
     public GameData Data {  get; private set; }
 
-    public int gold;
-    public int killCount;
-
     public System.Action<int> OnGoldChanged;
     public System.Action<int> OnKillCountChanged;
     public Action<int> OnStageChanged;
@@ -39,6 +36,8 @@ public class GameManager : MonoBehaviour
     {
         Data.gold += amount;
         OnGoldChanged?.Invoke(Data.gold);
+
+        SaveGame();
     }
 
     public void AddKill()
@@ -67,5 +66,85 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("로드 완료");
+    }
+
+    public bool TryUpgradeAttack()
+    {
+        int level = Data.attackPowerLevel;
+
+        if (level >= GoldUpGrade.MAX_LEVEL)
+            return false;
+
+        int cost = GoldUpGrade.GetUpgradeCost(level);
+
+        if (Data.gold < cost) return false;
+
+        Data.gold -= cost;
+        Data.attackPowerLevel++;
+
+        OnGoldChanged?.Invoke(Data.gold);
+        SaveGame();
+
+        return true;
+    }
+
+    public bool TryUpgradeHP()
+    {
+        int level = Data.hpLevel;
+
+        if (level >= GoldUpGrade.MAX_LEVEL)
+            return false;
+
+        int cost = GoldUpGrade.GetUpgradeCost(level);
+
+        if (Data.gold < cost) return false;
+
+        Data.gold -= cost;
+        Data.hpLevel++;
+
+        OnGoldChanged?.Invoke(Data.gold);
+        SaveGame();
+
+        return true;
+    }
+
+    public bool TryUpgradeAS()
+    {
+        int level = Data.attackSpeedLevel;
+
+        if (level >= GoldUpGrade.MAX_LEVEL)
+            return false;
+
+        int cost = (int)GoldUpGrade.GetAttackSpeed(level);
+
+        if(Data.gold < cost) return false;
+
+        Data.gold -= cost;
+        Data.attackSpeedLevel++;
+
+        OnGoldChanged?.Invoke(Data.gold);
+        SaveGame();
+
+        return true;
+    }
+
+    public bool TryUpgradeMoveSpeed()
+    {
+        int level = Data.moveSpeedLevel;
+
+        if (level >= GoldUpGrade.MAX_LEVEL)
+            return false;
+
+        int cost = GoldUpGrade.GetUpgradeCost(level);
+
+        if (Data.gold < cost) return false;
+
+        Data.gold -= cost;
+        Data.moveSpeedLevel++;
+
+        OnGoldChanged?.Invoke(Data.gold);
+        SaveGame();
+
+        return true;
     }
 }

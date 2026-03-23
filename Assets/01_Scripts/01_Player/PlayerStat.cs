@@ -12,6 +12,39 @@ public class PlayerStat : MonoBehaviour
 
     public event Action<float> OnMaxHpChanged;
     public event Action<float> OnAttackPowerChanged;
+    public event Action<float> OnAttackSpeedChanged;
+    public event Action<float> OnMoveSpeedChanged;
+
+    void Start()
+    {
+        var data = GameManager.Instance.Data;
+
+        ResetBaseStat();
+        ApplyPermanentUpgrade();
+    }
+
+    void ApplyPermanentUpgrade()
+    {
+        var data = GameManager.Instance.Data;
+
+        attackPower = GoldUpGrade.GetAttackPower(data.attackPowerLevel);
+        attackSpeed = GoldUpGrade.GetAttackSpeed(data.attackSpeedLevel);
+        moveSpeed = GoldUpGrade.GetMoveSpeed(data.moveSpeedLevel);
+        maxHP = GoldUpGrade.GetHP(data.hpLevel);
+
+        OnAttackPowerChanged?.Invoke(attackPower);
+        OnMaxHpChanged?.Invoke(maxHP);
+        OnAttackSpeedChanged?.Invoke(attackSpeed);
+        OnMoveSpeedChanged?.Invoke(moveSpeed);
+    }
+
+    void ResetBaseStat()
+    {
+        attackPower = 10;
+        attackSpeed = 1;
+        moveSpeed = 5;
+        maxHP = 100;
+    }
 
     public void ApplyUpgrade(UpGradeData option)
     {

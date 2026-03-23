@@ -9,4 +9,9 @@ public class GameData
     public int killCount;
     public int stage;
     public float playTime;
+
+    public int attackPowerLevel;
+    public int attackSpeedLevel;
+    public int moveSpeedLevel;
+    public int hpLevel;
 }

@@ -15,6 +15,9 @@ public class EnemyData : ScriptableObject
     [Range(0f, 1f)]
     public float healDropChance;
 
+    public float goldDropChance;
+    public int dropGold;
+
     public EnemyCore enemyPrefab;
 
     public bool isElite;

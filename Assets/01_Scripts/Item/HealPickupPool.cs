@@ -15,7 +15,6 @@ public class HealPickupPool : MonoBehaviour
     {
         Instance = this;
 
-        // 초기 풀 생성
         for (int i = 0; i < initialSize; i++)
         {
             CreateNew();

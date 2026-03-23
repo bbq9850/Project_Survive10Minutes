@@ -15,6 +15,8 @@ public class EnemyCore : MonoBehaviour
     [SerializeField] GameObject magnetPrefab;
     [SerializeField] float magnetDropChance = 1f;
 
+    [SerializeField] GameObject coinPrefab;
+
     bool isDead;
 
     public EnemyCore OriginalPrefab { get; private set; }
@@ -65,6 +67,7 @@ public class EnemyCore : MonoBehaviour
 
             TryDropHeal();
             TryDropMagnet();
+            TryDropGold();
         }
 
         EnemyManager.instance.OnEnemyDead(this);
@@ -103,6 +106,19 @@ public class EnemyCore : MonoBehaviour
             Vector3 pos = transform.position;
             pos.y = 0.5f;
             Instantiate(magnetPrefab, pos, Quaternion.identity);
+        }
+    }
+
+    void TryDropGold()
+    {
+        if (data == null) return;
+
+        if (Random.value <= data.goldDropChance)
+        {
+            Vector3 pos = transform.position;
+            pos.y = 0.5f;
+            GameObject coin = Instantiate(coinPrefab, pos, Quaternion.identity);
+            coin.GetComponent<CoinPickUp>().Init(data.dropGold);
         }
     }
 
