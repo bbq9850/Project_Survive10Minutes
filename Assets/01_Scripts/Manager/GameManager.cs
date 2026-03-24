@@ -27,11 +27,6 @@ public class GameManager : MonoBehaviour
         LoadGame();
     }
 
-    private void Update()
-    {
-        
-    }
-
     public void AddGold(int amount)
     {
         Data.gold += amount;
@@ -66,6 +61,19 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("로드 완료");
+    }
+
+    public void ResetGameData()
+    {
+        PlayerPrefs.DeleteKey("SAVE_DATA");
+        PlayerPrefs.Save();
+
+        Data = new GameData();
+
+        OnGoldChanged?.Invoke(Data.gold);
+        OnKillCountChanged?.Invoke(Data.killCount);
+
+        Debug.Log("데이터 초기화 완료");
     }
 
     public bool TryUpgradeAttack()

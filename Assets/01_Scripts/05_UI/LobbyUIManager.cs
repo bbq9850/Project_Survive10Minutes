@@ -39,4 +39,10 @@ public class LobbyUIManager : MonoBehaviour
         optionPanel.SetActive(false);
         optionTween?.PlayClose();
     }
+
+    // 관리용 리셋버튼 (추후 삭제)
+    public void OnClick_ResetData()
+    {
+        GameManager.Instance.ResetGameData();
+    }
 }

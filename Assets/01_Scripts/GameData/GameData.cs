@@ -14,4 +14,8 @@ public class GameData
     public int attackSpeedLevel;
     public int moveSpeedLevel;
     public int hpLevel;
+
+    public List<string> clearedChallenges = new List<string>();
+
+    public List<string> rewardedChallenges = new List<string>();
 }

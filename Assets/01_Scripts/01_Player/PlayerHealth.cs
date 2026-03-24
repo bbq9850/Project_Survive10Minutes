@@ -7,9 +7,12 @@ public class PlayerHealth : MonoBehaviour
 {
     public event Action<float, float> OnHpChanged;
     public event Action OnDead;
+    public event Action<float> OnDamaged;
     PlayerStat stat;
     
     private float currentHp;
+
+    bool isInvincible;
 
     public float CurrentHP => currentHp;
     
@@ -27,6 +30,10 @@ public class PlayerHealth : MonoBehaviour
         if (GodModManager.Instance != null && GodModManager.Instance.godMode)
             return;
 
+        if (isInvincible) return;
+
+    StartCoroutine(InvincibleTime());
+
         if (playerIsDead)
         {
             return;
@@ -35,7 +42,7 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHp -= damage;
             currentHp = Mathf.Clamp(currentHp, 0, stat.maxHP);
-            // Debug.Log($"HP : {currentHp} / {stat.maxHP}");
+            OnDamaged?.Invoke(damage);
 
             OnHpChanged?.Invoke(currentHp, stat.maxHP);
         }
@@ -62,7 +69,14 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("PlayerDead");
     }
 
-    
+    IEnumerator InvincibleTime()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(0.5f);
+        isInvincible = false;
+    }
+
+
     void Update()
     {
         

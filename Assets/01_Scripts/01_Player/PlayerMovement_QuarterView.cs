@@ -36,6 +36,17 @@ public class PlayerMovement_QuarterView : MonoBehaviour
         Move();
     }
 
+    void LateUpdate()
+    {
+        Vector3 pos = transform.position;
+
+        pos = MapBounds.Instance.ClampPosition(pos);
+
+        pos.y = 1f;
+
+        transform.position = pos;
+    }
+
     void UpdateCameraDir()
     {
         camForward = mainCam.forward;

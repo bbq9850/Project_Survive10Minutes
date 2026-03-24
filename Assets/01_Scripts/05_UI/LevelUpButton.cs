@@ -47,10 +47,10 @@ public class LevelUpButton : MonoBehaviour
                 return GetStatText(d);
 
             case UpGradeType.WeaponUnlock:
-                return $"{d.weaponData.weaponType} 획득";
+                return $"GET {d.weaponData.weaponType}";
 
             case UpGradeType.WeaponUpgrade:
-                return $"{d.weaponData.weaponType} 강화";
+                return $"UPGRADE {d.weaponData.weaponType}";
         }
 
         return "";
@@ -61,16 +61,16 @@ public class LevelUpButton : MonoBehaviour
         switch (d.statType)
         {
             case StatType.AttackPower:
-                return $"공격력 +{d.value}";
+                return $"ATTACK POWER +{d.value}";
 
             case StatType.AttackSpeed:
-                return $"공격속도 +{d.value * 100f}%";
+                return $"ATTACK SPEED +{d.value * 100f}%";
 
             case StatType.MoveSpeed:
-                return $"이동속도 +{d.value * 100f}%";
+                return $"MOVE SPEED +{d.value * 100f}%";
 
             case StatType.MaxHp:
-                return $"최대체력 +{d.value}";
+                return $"MAX HP +{d.value}";
         }
 
         return "";

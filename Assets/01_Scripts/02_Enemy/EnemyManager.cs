@@ -182,14 +182,31 @@ public class EnemyManager : MonoBehaviour
 
     Vector3 RandomSpawnPos()
     {
-        Vector2 randomDir = Random.insideUnitCircle;
-        float dis = Random.Range(spawnRadiusMin, spawnRadiusMax);
+        Vector3 spawnPos;
 
-        Vector3 offset = new Vector3(randomDir.x, 0, randomDir.y) * dis;
-        return new Vector3(
-        player.position.x + offset.x,
-        0f,
-        player.position.z + offset.z);
+        int tryCount = 0;
+
+        do
+        {
+            Vector2 randomDir = Random.insideUnitCircle;
+            float dis = Random.Range(spawnRadiusMin, spawnRadiusMax);
+
+            Vector3 offset = new Vector3(randomDir.x, 0, randomDir.y) * dis;
+
+            spawnPos = new Vector3(
+                player.position.x + offset.x,
+                0f,
+                player.position.z + offset.z
+            );
+
+            tryCount++;
+
+            if (tryCount > 10)
+                break;
+
+        } while (!MapBounds.Instance.IsInside(spawnPos));
+
+        return MapBounds.Instance.ClampPosition(spawnPos);
     }
 
     void SpawnBoss()

@@ -18,44 +18,133 @@ public class UpGradeShop : MonoBehaviour
     [SerializeField] Button moveSpeedButton;
     [SerializeField] Button hpButton;
 
-    [SerializeField] Color normarColor = Color.white;
-    [SerializeField] Color lackColor = Color.red;
-    [SerializeField] Color maxColor = Color.yellow;
+    [SerializeField] GameObject subPanel;
+    [SerializeField] Text subText;
+
+    UITween subTween;
+
+    private void Awake()
+    {
+        subTween = subPanel.GetComponent<UITween>();    
+    }
 
     void Start()
     {
         RefreshAll();
         GameManager.Instance.OnGoldChanged += RefreshGold;
+        subPanel.SetActive(false);
     }
 
     void RefreshGold(int _ = 0)
     {
+        if (goldText == null) return;
         goldText.text = $"{GameManager.Instance.Data.gold}";
         UpdateButtonState();
     }
 
+    void OnDestroy()
+    {
+        GameManager.Instance.OnGoldChanged -= RefreshGold;
+    }
+
     public void OnClick_AttackPower()
     {
+        var data = GameManager.Instance.Data;
+
+        if (data.attackPowerLevel >= GoldUpGrade.MAX_LEVEL)
+        {
+            MaxLevel();
+            return;
+        }
+
+        int cost = GoldUpGrade.GetUpgradeCost(data.attackPowerLevel);
+
+        if (data.gold < cost)
+        {
+            MoreGold();
+            return;
+        }
+
         if (GameManager.Instance.TryUpgradeAttack())
+        {
+            UpgradeComplete();
             RefreshAll();
+        }        
     }
 
     public void OnClick_AttackSpeed()
     {
+        var data = GameManager.Instance.Data;
+
+        if (data.attackSpeedLevel >= GoldUpGrade.MAX_LEVEL)
+        {
+            MaxLevel();
+            return;
+        }
+
+        int cost = GoldUpGrade.GetUpgradeCost(data.attackSpeedLevel);
+
+        if (data.gold < cost)
+        {
+            MoreGold();
+            return;
+        }
+
         if (GameManager.Instance.TryUpgradeAS())
+        {
+            UpgradeComplete();
             RefreshAll();
+        }
     }
 
     public void OnClick_MoveSpeed()
     {
+        var data = GameManager.Instance.Data;
+
+        if (data.moveSpeedLevel >= GoldUpGrade.MAX_LEVEL)
+        {
+            MaxLevel();
+            return;
+        }
+
+        int cost = GoldUpGrade.GetUpgradeCost(data.moveSpeedLevel);
+
+        if (data.gold < cost)
+        {
+            MoreGold();
+            return;
+        }
+
         if (GameManager.Instance.TryUpgradeMoveSpeed())
+        {
+            UpgradeComplete();
             RefreshAll();
+        }
     }
 
     public void OnClick_HP()
     {
+        var data = GameManager.Instance.Data;
+
+        if (data.hpLevel >= GoldUpGrade.MAX_LEVEL)
+        {
+            MaxLevel();
+            return;
+        }
+
+        int cost = GoldUpGrade.GetUpgradeCost(data.hpLevel);
+
+        if (data.gold < cost)
+        {
+            MoreGold();
+            return;
+        }
+
         if (GameManager.Instance.TryUpgradeHP())
+        {
+            UpgradeComplete();
             RefreshAll();
+        }
     }
 
     void RefreshAll()
@@ -67,33 +156,20 @@ public class UpGradeShop : MonoBehaviour
         SetUpgradeText(moveSpeedText, "MOVE SPD", data.moveSpeedLevel, data.gold);
         SetUpgradeText(hpText, "MAX HP", data.hpLevel, data.gold);
 
-        attackPowerButton.gameObject.SetActive(data.attackPowerLevel < GoldUpGrade.MAX_LEVEL);
-        attackSpeedButton.gameObject.SetActive(data.attackSpeedLevel < GoldUpGrade.MAX_LEVEL);
-        moveSpeedButton.gameObject.SetActive(data.moveSpeedLevel < GoldUpGrade.MAX_LEVEL);
-        hpButton.gameObject.SetActive(data.hpLevel < GoldUpGrade.MAX_LEVEL);
+        attackPowerButton.gameObject.SetActive(data.attackPowerLevel <= GoldUpGrade.MAX_LEVEL);
+        attackSpeedButton.gameObject.SetActive(data.attackSpeedLevel <= GoldUpGrade.MAX_LEVEL);
+        moveSpeedButton.gameObject.SetActive(data.moveSpeedLevel <= GoldUpGrade.MAX_LEVEL);
+        hpButton.gameObject.SetActive(data.hpLevel <= GoldUpGrade.MAX_LEVEL);
 
         RefreshGold();
     }
 
     void UpdateButtonState()
     {
-        var data = GameManager.Instance.Data;
-
-        attackPowerButton.interactable =
-        data.attackPowerLevel < GoldUpGrade.MAX_LEVEL &&
-        data.gold >= GoldUpGrade.GetUpgradeCost(data.attackPowerLevel);
-
-        attackSpeedButton.interactable =
-            data.attackSpeedLevel < GoldUpGrade.MAX_LEVEL &&
-            data.gold >= GoldUpGrade.GetUpgradeCost(data.attackSpeedLevel);
-
-        moveSpeedButton.interactable =
-            data.moveSpeedLevel < GoldUpGrade.MAX_LEVEL &&
-            data.gold >= GoldUpGrade.GetUpgradeCost(data.moveSpeedLevel);
-
-        hpButton.interactable =
-            data.hpLevel < GoldUpGrade.MAX_LEVEL &&
-            data.gold >= GoldUpGrade.GetUpgradeCost(data.hpLevel);
+        attackPowerButton.interactable = true;
+        attackSpeedButton.interactable = true;
+        moveSpeedButton.interactable = true;
+        hpButton.interactable = true;
     }
 
     void SetUpgradeText(Text textUI, string label, int level, int gold)
@@ -101,17 +177,39 @@ public class UpGradeShop : MonoBehaviour
         if (level >= GoldUpGrade.MAX_LEVEL)
         {
             textUI.text = $"{label} Lv.MAX";
-            textUI.color = Color.yellow;
+            textUI.color = Color.red;
             return;
         }
 
         int cost = GoldUpGrade.GetUpgradeCost(level);
 
         textUI.text = $"{label}\n Lv.{level}\nCost : {cost}";
+    }
 
-        if (gold < cost)
-            textUI.color = Color.red;
-        else
-            textUI.color = Color.white;
+    public void MaxLevel()
+    {
+        subText.text = "MAX LEVEL";
+        subPanel.SetActive(true);
+        subTween?.PlayOpen();
+    }
+
+    public void MoreGold()
+    {
+        subText.text = "NEED MORE GOLD";
+        subPanel.SetActive(true);
+        subTween?.PlayOpen();
+    }
+
+    public void UpgradeComplete()
+    {
+        subText.text = "UPGRADE COMPLETE";
+        subPanel.SetActive(true);
+        subTween?.PlayOpen();
+    }
+
+    public void QuitSubPanel()
+    {
+        subTween?.PlayClose();
+        subPanel.SetActive(false);
     }
 }
