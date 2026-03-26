@@ -218,7 +218,7 @@ public class EnemyManager : MonoBehaviour
 
         EnemyData runtimeData = Instantiate(bossData);
 
-        boss.OnActiveEnemy(runtimeData, player);
+        boss.OnActiveEnemy(runtimeData, player); 
         ActiveEnemies.Add(boss);
         boss.name = "Boss";
 

@@ -5,8 +5,8 @@ using UnityEngine;
 public class MapBounds : MonoBehaviour
 {
     public static MapBounds Instance;
-    [SerializeField] Vector3 minBounds = new Vector3 (-20, 0, -20);
-    [SerializeField] Vector3 maxBounds = new Vector3(20, 0, 20);
+    [SerializeField] Vector3 minBounds = new Vector3 (-35, 0, -35);
+    [SerializeField] Vector3 maxBounds = new Vector3(35, 0, 35);
 
     void Awake()
     {

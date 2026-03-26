@@ -13,10 +13,17 @@ public class ChallengeManager : MonoBehaviour
     {
         Instance = this;
     }
-    void Start()
+
+    private void Start()
     {
+        if (GameManager.Instance == null)
+        {
+            return;
+        }
+
         GameManager.Instance.OnKillCountChanged += CheckChallenges;
         GameManager.Instance.OnGoldChanged += CheckChallenges;
+        CheckChallenges(0);
     }
 
     void OnDestroy()
@@ -30,14 +37,17 @@ public class ChallengeManager : MonoBehaviour
 
     void CheckChallenges(int _)
     {
+
         var data = GameManager.Instance.Data;
 
         foreach (var ch in challenges)
         {
+
             if (data.clearedChallenges.Contains(ch.id))
                 continue;
 
             int current = GetCurrentValue(ch);
+            // Debug.Log($"{ch.challengeName} : {current}/{ch.goal}");
 
             if (current >= ch.goal)
             {

@@ -2612,8 +2612,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f369acf9c64a56a48927f0cfef3b91fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minBounds: {x: -20, y: 0, z: -20}
-  maxBounds: {x: 20, y: 0, z: 20}
+  minBounds: {x: -35, y: 0, z: -35}
+  maxBounds: {x: 35, y: 0, z: 35}
 --- !u!1 &448009044
 GameObject:
   m_ObjectHideFlags: 0
@@ -9576,7 +9576,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1875131741
 RectTransform:
   m_ObjectHideFlags: 0

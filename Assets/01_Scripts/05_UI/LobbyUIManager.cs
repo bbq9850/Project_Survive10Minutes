@@ -6,14 +6,17 @@ public class LobbyUIManager : MonoBehaviour
 {
     [SerializeField] GameObject sellectStagePanel;
     [SerializeField] GameObject optionPanel;
+    [SerializeField] GameObject challengePanel;
 
     UITween sellectTween;
     UITween optionTween;
+    UITween challengeTween;
 
     void Awake()
     {
         sellectTween = sellectStagePanel.GetComponent<UITween>();
         optionTween = optionPanel.GetComponent<UITween>();
+        challengeTween = challengePanel.GetComponent<UITween>();
     }
 
     public void OnSellectStage()
@@ -38,6 +41,18 @@ public class LobbyUIManager : MonoBehaviour
     {
         optionPanel.SetActive(false);
         optionTween?.PlayClose();
+    }
+
+    public void OnChallenge()
+    {
+        challengePanel.SetActive(true);
+        challengeTween?.PlayOpen();
+    }
+
+    public void QuitChallenge()
+    {
+        challengePanel.SetActive(false);
+        challengeTween?.PlayClose();
     }
 
     // 관리용 리셋버튼 (추후 삭제)

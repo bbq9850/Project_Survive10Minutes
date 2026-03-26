@@ -39,17 +39,17 @@ public class ChallengeItemUI : MonoBehaviour
 
         if (!cleared)
         {
-            buttonText.text = "IN PROGRESS";
+            buttonText.text = $"PROGESS";
             claimButton.interactable = false;
         }
         else if (rewarded)
         {
-            buttonText.text = "CLEAR";
+            buttonText.text = "CLEARED";
             claimButton.interactable = false;
         }
         else
         {
-            buttonText.text = "GET REWARD";
+            buttonText.text = $"GET {ch.rewardGold}G";
             claimButton.interactable = true;
         }
     }
