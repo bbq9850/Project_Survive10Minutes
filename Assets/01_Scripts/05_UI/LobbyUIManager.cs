@@ -55,6 +55,11 @@ public class LobbyUIManager : MonoBehaviour
         challengeTween?.PlayClose();
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
     // 관리용 리셋버튼 (추후 삭제)
     public void OnClick_ResetData()
     {

@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
+  magicEffect: {fileID: 8777893582317652589, guid: 1a8bf3beeb6ec2345bd9a1a1a811f866, type: 3}
 --- !u!96 &1082279569704962832
 TrailRenderer:
   serializedVersion: 3

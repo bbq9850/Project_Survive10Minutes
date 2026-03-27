@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour
         if (level >= GoldUpGrade.MAX_LEVEL)
             return false;
 
-        int cost = (int)GoldUpGrade.GetAttackSpeed(level);
+        int cost = (int)GoldUpGrade.GetUpgradeCost(level);
 
         if(Data.gold < cost) return false;
 

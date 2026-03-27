@@ -15,6 +15,9 @@ public class PlayerDash : MonoBehaviour
     [SerializeField] float dashDuration = 0.2f;
     [SerializeField] float staminaCost = 20f;
 
+    [SerializeField] GameObject dashEffectPrefab;
+    [SerializeField] float effectOffset = 0.8f;
+
     bool isDashing;
     bool canDash = true;
     void Awake()
@@ -41,6 +44,7 @@ public class PlayerDash : MonoBehaviour
             return;
 
         StartCoroutine(DashRoutine());
+        PlayDashEffect();
     }
 
     IEnumerator DashRoutine()
@@ -60,6 +64,28 @@ public class PlayerDash : MonoBehaviour
 
         isDashing = false;
         canDash = true;
+    }
+
+    void PlayDashEffect()
+    {
+        if (dashEffectPrefab == null) return;
+        if (movement == null) return;
+
+        Vector3 dir = movement.MoveDir;
+
+        if (dir == Vector3.zero)
+            dir = transform.forward;
+
+        dir.Normalize();
+
+        Vector3 spawnPos = transform.position - dir * effectOffset;
+        spawnPos.y = transform.position.y - 0.5f;
+
+        Quaternion rot = Quaternion.LookRotation(-dir);
+
+        GameObject fx = Instantiate(dashEffectPrefab, spawnPos, rot);
+
+        Destroy(fx, 1.5f);
     }
     public bool IsDashing => isDashing;
 }

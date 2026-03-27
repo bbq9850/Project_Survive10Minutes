@@ -45,6 +45,8 @@ public class PlayerMovement_QuarterView : MonoBehaviour
         pos.y = 1f;
 
         transform.position = pos;
+
+        MapBounds.Instance.UpdateWalls(pos);
     }
 
     void UpdateCameraDir()

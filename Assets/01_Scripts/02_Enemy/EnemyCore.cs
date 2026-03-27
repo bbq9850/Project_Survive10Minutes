@@ -89,9 +89,17 @@ public class EnemyCore : MonoBehaviour
     {
         if(enemyHealth == null)
         {
-            Debug.Log($"{name} health is null");
             return;
         }
+        Collider col = GetComponent<Collider>();
+
+        Vector3 spawnPos = col.bounds.center +
+                           Vector3.up * (col.bounds.extents.y + 0.3f);
+
+        spawnPos.x += Random.Range(-0.3f, 0.3f);
+        spawnPos.z += Random.Range(-0.3f, 0.3f);
+
+        DamageTextManager.Instance.Spawn(spawnPos, damage);
         enemyHealth.TakeDamage(damage);
     }
 

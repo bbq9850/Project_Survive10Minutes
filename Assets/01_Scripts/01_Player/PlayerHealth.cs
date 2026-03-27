@@ -45,6 +45,7 @@ public class PlayerHealth : MonoBehaviour
             OnDamaged?.Invoke(damage);
 
             OnHpChanged?.Invoke(currentHp, stat.maxHP);
+            Camera_QuarterViewRot.Instance.Shake(1.2f, 1.2f);
         }
 
         if(currentHp <= 0)

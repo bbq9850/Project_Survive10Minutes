@@ -11,6 +11,8 @@ public class Projectile : MonoBehaviour
     float lifeTime = 7f;
     float timer;
 
+    [SerializeField] GameObject magicEffect;
+
     public void Init(Vector3 dir, float dmg)
     {
         direction = dir.normalized;
@@ -37,6 +39,9 @@ public class Projectile : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeDamage(damage);
+
+            GameObject fx = Instantiate(magicEffect, transform.position, Quaternion.identity);
+            Destroy(fx, 0.3f);
 
             ProjectilePool.Instance.Return(gameObject);
         }
